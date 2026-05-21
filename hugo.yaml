@@ -1,0 +1,55 @@
+baseURL: "https://joelbmarks.com/"
+languageCode: "en-gb"
+title: "Joel B. Marks"
+theme: "PaperMod"
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+pagination:
+  pagerSize: 10
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+params:
+  env: production
+  title: "Joel B. Marks"
+  description: "Joel B. Marks"
+  author: "Joel B. Marks"
+  DateFormat: "January 2, 2006"
+  defaultTheme: auto
+  disableThemeToggle: false
+  ShowReadingTime: false
+  ShowShareButtons: false
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: false
+  ShowToc: false
+  ShowWordCount: false
+  hideFooter: false
+  # Home page must show no post feed. PaperMod builds the home list from
+  # site.Params.mainSections; pointing it at an intentionally unused section
+  # yields an empty list without touching any layout.
+  mainSections: ["none"]
+  assets:
+    disableHLJS: true
+    favicon: "/favicon/favicon.ico"
+    favicon16x16: "/favicon/favicon-16x16.png"
+    favicon32x32: "/favicon/favicon-32x32.png"
+    apple_touch_icon: "/favicon/apple-touch-icon.png"
+    safari_pinned_tab: "/favicon/safari-pinned-tab.svg"
+
+menu:
+  main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 10
+    - identifier: papers
+      name: Papers
+      url: /papers/
+      weight: 20
