@@ -1,0 +1,85 @@
+/* Font roles (loaded in layouts/_partials/extend_head.html):
+     --font-title : wire/thin display — site title / logo only
+     --font-sans  : internationalised sans — H1, H2–H5, and all UI/UX
+     --font-serif : serif — body copy
+   Families below are proposals; swap a single value to change a role. */
+:root {
+    --font-title: "Raleway", system-ui, sans-serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+
+/* Body copy = serif */
+body {
+    font-family: var(--font-serif);
+}
+
+/* Headings = internationalised sans */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.post-title,
+.entry-header h2 {
+    font-family: var(--font-sans);
+}
+
+/* UI / UX chrome = internationalised sans */
+.menu,
+.menu a,
+.logo-switches,
+.pagination,
+.breadcrumbs,
+.post-meta,
+.entry-footer,
+.terms-tags,
+.footer,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-sans);
+}
+
+/* Site title / logo = wire/thin Title font.
+   (Decorative logo treatment — weight contrast, letterspacing — is still
+   open; this just establishes the Title font role at a thin weight.) */
+.logo a {
+    font-family: var(--font-title);
+    font-weight: 300;
+}
+
+/* Heading scale — no content heading (H2–H6) smaller than the 18px body.
+   H1 is the in-content title: wire weight (thin Inter), larger. */
+.md-content h1 {
+    font-weight: 200;
+    font-size: 44px;
+}
+
+.md-content h2 {
+    font-size: 32px;
+}
+
+.md-content h3 {
+    font-size: 26px;
+}
+
+.md-content h4 {
+    font-size: 22px;
+}
+
+.md-content h5 {
+    font-size: 20px;
+}
+
+.md-content h6 {
+    font-size: 18px;
+}
+
+/* Footnotes — sans, slightly smaller than the serif body. */
+.footnotes {
+    font-family: var(--font-sans);
+    font-size: 0.85em;
+}

@@ -1,0 +1,16 @@
+/* Theme toggle to the right edge of the nav bar.
+   PaperMod nests .logo-switches (the toggle) inside .logo on the left.
+   display:contents dissolves the .logo box so the title link and the
+   switches join the nav's flex flow as direct items, letting order +
+   margin place the toggle after the menu, hard right. */
+.logo {
+    display: contents;
+}
+
+.menu {
+    margin-inline-start: auto;
+}
+
+.logo-switches {
+    order: 1;
+}
