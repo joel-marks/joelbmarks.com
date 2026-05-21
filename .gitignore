@@ -1,0 +1,19 @@
+# Hugo build artefacts
+public/
+resources/_gen/
+.hugo_build.lock
+
+# OS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editors
+.idea/
+
+# Internal context — not for public repo
+BRIEF.md
