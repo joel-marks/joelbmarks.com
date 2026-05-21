@@ -52,8 +52,11 @@ textarea {
 }
 
 /* Heading scale — no content heading (H2–H6) smaller than the 18px body.
-   H1 is the in-content title: wire weight (thin Inter), larger. */
-.md-content h1 {
+   All H1s share one wire (thin Inter) treatment: in-content markdown H1,
+   single-page titles (.post-title) and section titles (.page-header h1). */
+.md-content h1,
+.post-title,
+.page-header h1 {
     font-weight: 200;
     font-size: 44px;
 }
