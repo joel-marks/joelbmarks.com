@@ -1,0 +1,13 @@
+{{- /* Reusable PDF download button. Renders nothing unless .Params.pdf is set.
+       Optional .Params.pages and .Params.filesize show as display metadata. */ -}}
+{{- with .Params.pdf }}
+<div class="paper-download">
+  <a class="paper-download-btn" href="{{ . | relURL }}" download>Download PDF</a>
+  {{- $meta := slice }}
+  {{- with $.Params.pages }}{{ $meta = $meta | append (printf "%d pages" .) }}{{ end }}
+  {{- with $.Params.filesize }}{{ $meta = $meta | append (printf "%s" .) }}{{ end }}
+  {{- with $meta }}
+  <span class="paper-download-meta">{{ delimit . " · " }}</span>
+  {{- end }}
+</div>
+{{- end }}

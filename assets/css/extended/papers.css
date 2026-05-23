@@ -1,0 +1,111 @@
+/* Paper single page, papers index list, and PDF download button.
+   Uses PaperMod CSS variables; restrained, no shadows, hover-only motion. */
+
+/* --- Paper single --- */
+.paper-single .post-meta {
+    margin-top: 8px;
+}
+
+.paper-summary {
+    margin-top: 16px;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--secondary);
+}
+
+/* --- Download button --- */
+.paper-download {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin: 40px 0 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.paper-download-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: var(--theme);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.paper-download-btn:hover,
+.paper-download-btn:focus-visible {
+    background: var(--secondary);
+}
+
+.paper-download-meta {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--secondary);
+}
+
+/* --- Back link --- */
+.paper-back {
+    margin-top: 32px;
+}
+
+.paper-back a {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.paper-back a:hover {
+    color: var(--primary);
+}
+
+/* --- Papers index list --- */
+.paper-list {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+}
+
+.paper-list-item {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.paper-list-item:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.paper-list-title {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.paper-list-title:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+}
+
+.paper-list-date {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.paper-list-summary {
+    margin: 10px 0 0;
+    font-family: var(--font-serif);
+    color: var(--primary);
+}
