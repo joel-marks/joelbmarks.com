@@ -62,6 +62,7 @@ textarea {
 }
 
 .md-content h2 {
+    font-weight: 400;
     font-size: 32px;
 }
 
