@@ -53,3 +53,7 @@ menu:
       name: Papers
       url: /papers/
       weight: 20
+    - identifier: markdown
+      name: Markdown
+      url: /markdown/
+      weight: 30
