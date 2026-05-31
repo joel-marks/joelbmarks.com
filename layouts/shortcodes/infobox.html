@@ -1,28 +1,38 @@
 {{- /* Tinted infobox / admonition shortcode (paired).
        Named params:
          type       (optional)  note | info | tip | warning | danger   (default "note")
-         title      (optional)  overrides the default label text
+         title      (optional)  overrides the default visually-hidden a11y label
          cta_url    (optional)  CTA button URL (requires cta_label to render)
          cta_label  (optional)  CTA button label
          cta_newtab (optional)  bool — opens CTA in a new tab
-       Inner content is rendered as markdown.
-       Renders nothing fancy in the markup beyond a labelled container and the
-       inner content; per-variant chrome is applied entirely in CSS. */ -}}
+       Inner content is rendered as markdown. A per-variant inline SVG icon
+       sits at the start of the box; the text type label is hidden visually
+       but exposed to assistive tech via a .sr-only span. */ -}}
 {{- $valid := slice "note" "info" "tip" "warning" "danger" -}}
 {{- $type  := lower (.Get "type" | default "note") -}}
 {{- if not (in $valid $type) }}{{ $type = "note" }}{{ end -}}
 {{- $title := .Get "title" | default (humanize $type) -}}
-{{- $cta_url   := .Get "cta_url" -}}
-{{- $cta_label := .Get "cta_label" -}}
+{{- $cta_url    := .Get "cta_url" -}}
+{{- $cta_label  := .Get "cta_label" -}}
 {{- $cta_newtab := eq (lower (.Get "cta_newtab" | default "false")) "true" -}}
+{{- $path := "" -}}
+{{- if   eq $type "note"    }}{{ $path = "M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z" -}}
+{{- else if eq $type "info"    }}{{ $path = "M21 12a9 9 0 11-18 0 9 9 0 0118 0zM12 16v-4M12 8h.01" -}}
+{{- else if eq $type "tip"     }}{{ $path = "M13 2L3 14h9l-1 8 10-12h-9l1-8z" -}}
+{{- else if eq $type "warning" }}{{ $path = "M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" -}}
+{{- else if eq $type "danger"  }}{{ $path = "M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2zM12 8v4M12 16h.01" -}}
+{{- end -}}
 <div class="callout callout--{{ $type }}" role="note">
-  <span class="callout-label">{{ $title }}</span>
-  {{ .Inner | markdownify }}
-  {{- if and $cta_url $cta_label }}
-  {{ partial "button.html" (dict
-      "url"    $cta_url
-      "label"  $cta_label
-      "size"   "sm"
-      "newtab" $cta_newtab) }}
-  {{- end }}
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $path }}"/></svg>
+  <span class="sr-only">{{ $title }}</span>
+  <div class="callout-body">
+    {{ .Inner | markdownify }}
+    {{- if and $cta_url $cta_label }}
+    {{ partial "button.html" (dict
+        "url"    $cta_url
+        "label"  $cta_label
+        "size"   "sm"
+        "newtab" $cta_newtab) }}
+    {{- end }}
+  </div>
 </div>
