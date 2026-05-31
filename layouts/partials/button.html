@@ -1,0 +1,15 @@
+{{- /* Generic button partial — single source of button markup site-wide.
+       Args (dict):
+         url    (required) string
+         label  (required) string
+         size   (optional) "" | "sm"
+         newtab (optional) bool — adds target="_blank" rel="noopener noreferrer"
+       Renders an <a> (this is a navigation control, not a <button>). */ -}}
+{{- $url    := .url -}}
+{{- $label  := .label -}}
+{{- $size   := .size   | default "" -}}
+{{- $newtab := .newtab | default false -}}
+{{- $class  := "btn" -}}
+{{- if eq $size "sm" }}{{ $class = printf "%s btn--sm" $class }}{{ end -}}
+<a class="{{ $class }}" href="{{ $url }}"
+   {{- if $newtab }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ $label }}</a>

@@ -1,0 +1,113 @@
+/* Reusable components — generic button and tinted infobox / admonition.
+   Uses PaperMod CSS variables. No flashy fills, no shadows, no JS. */
+
+/* --- Button -------------------------------------------------------------- */
+
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    background: var(--entry);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+    background: var(--border);
+    border-color: var(--tertiary);
+}
+
+.btn--sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* --- Callout / infobox --------------------------------------------------- */
+
+.callout {
+    /* Defaults (used by `note`); per-variant rules below override. */
+    --callout-accent: var(--border);
+    --callout-bg: var(--entry);
+    --callout-fg: var(--primary);
+
+    margin: 1.5em 0;
+    padding: 14px 16px 14px 18px;
+    border-left: 3px solid var(--callout-accent);
+    background: var(--callout-bg);
+    border-radius: var(--radius);
+    color: var(--callout-fg);
+}
+
+.callout-label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--callout-accent);
+}
+
+.callout>p:first-of-type {
+    margin-top: 0;
+}
+
+.callout>p:last-of-type {
+    margin-bottom: 0;
+}
+
+.callout>.btn {
+    margin-top: 10px;
+}
+
+/* `note` is intentionally neutral — uses the defaults above (theme vars only). */
+
+.callout--info {
+    --callout-accent: #2563eb;
+    --callout-bg: rgba(37, 99, 235, 0.08);
+}
+
+.callout--tip {
+    --callout-accent: #16a34a;
+    --callout-bg: rgba(22, 163, 74, 0.08);
+}
+
+.callout--warning {
+    --callout-accent: #d97706;
+    --callout-bg: rgba(217, 119, 6, 0.10);
+}
+
+.callout--danger {
+    --callout-accent: #dc2626;
+    --callout-bg: rgba(220, 38, 38, 0.10);
+}
+
+/* Dark — lift the accent luminance and the tint alpha so the wash stays
+   readable against the dark background. `note` continues to use defaults. */
+
+[data-theme="dark"] .callout--info {
+    --callout-accent: #60a5fa;
+    --callout-bg: rgba(96, 165, 250, 0.12);
+}
+
+[data-theme="dark"] .callout--tip {
+    --callout-accent: #4ade80;
+    --callout-bg: rgba(74, 222, 128, 0.12);
+}
+
+[data-theme="dark"] .callout--warning {
+    --callout-accent: #fbbf24;
+    --callout-bg: rgba(251, 191, 36, 0.14);
+}
+
+[data-theme="dark"] .callout--danger {
+    --callout-accent: #f87171;
+    --callout-bg: rgba(248, 113, 113, 0.14);
+}

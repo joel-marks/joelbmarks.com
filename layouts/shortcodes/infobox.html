@@ -1,0 +1,28 @@
+{{- /* Tinted infobox / admonition shortcode (paired).
+       Named params:
+         type       (optional)  note | info | tip | warning | danger   (default "note")
+         title      (optional)  overrides the default label text
+         cta_url    (optional)  CTA button URL (requires cta_label to render)
+         cta_label  (optional)  CTA button label
+         cta_newtab (optional)  bool — opens CTA in a new tab
+       Inner content is rendered as markdown.
+       Renders nothing fancy in the markup beyond a labelled container and the
+       inner content; per-variant chrome is applied entirely in CSS. */ -}}
+{{- $valid := slice "note" "info" "tip" "warning" "danger" -}}
+{{- $type  := lower (.Get "type" | default "note") -}}
+{{- if not (in $valid $type) }}{{ $type = "note" }}{{ end -}}
+{{- $title := .Get "title" | default (humanize $type) -}}
+{{- $cta_url   := .Get "cta_url" -}}
+{{- $cta_label := .Get "cta_label" -}}
+{{- $cta_newtab := eq (lower (.Get "cta_newtab" | default "false")) "true" -}}
+<div class="callout callout--{{ $type }}" role="note">
+  <span class="callout-label">{{ $title }}</span>
+  {{ .Inner | markdownify }}
+  {{- if and $cta_url $cta_label }}
+  {{ partial "button.html" (dict
+      "url"    $cta_url
+      "label"  $cta_label
+      "size"   "sm"
+      "newtab" $cta_newtab) }}
+  {{- end }}
+</div>
