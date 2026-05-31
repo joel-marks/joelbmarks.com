@@ -82,6 +82,18 @@
     min-width: 0;
 }
 
+/* Optional visible title — mutually exclusive with the icon (when set, the
+   icon is suppressed in the shortcode). Non-heading element to avoid leaking
+   entries into the page heading outline. */
+.callout-title {
+    margin: 0 0 6px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    color: var(--callout-accent);
+}
+
 .callout-body>p:first-of-type {
     margin-top: 0;
 }

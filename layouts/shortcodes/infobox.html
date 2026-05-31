@@ -1,17 +1,20 @@
 {{- /* Tinted infobox / admonition shortcode (paired).
        Named params:
          type       (optional)  note | info | tip | warning | danger   (default "note")
-         title      (optional)  overrides the default visually-hidden a11y label
+         title      (optional)  visible title text. Mutually exclusive with the
+                                inline variant icon: when set, the icon is
+                                suppressed; when empty, the icon is rendered.
          cta_url    (optional)  CTA button URL (requires cta_label to render)
          cta_label  (optional)  CTA button label
          cta_newtab (optional)  bool — opens CTA in a new tab
-       Inner content is rendered as markdown. A per-variant inline SVG icon
-       sits at the start of the box; the text type label is hidden visually
-       but exposed to assistive tech via a .sr-only span. */ -}}
+       Inner content is rendered as markdown. A visually-hidden .sr-only span
+       always announces the variant to assistive tech (uses `title` when set,
+       otherwise the capitalised type name). */ -}}
 {{- $valid := slice "note" "info" "tip" "warning" "danger" -}}
 {{- $type  := lower (.Get "type" | default "note") -}}
 {{- if not (in $valid $type) }}{{ $type = "note" }}{{ end -}}
-{{- $title := .Get "title" | default (humanize $type) -}}
+{{- $user_title := .Get "title" -}}
+{{- $sr_label   := $user_title | default (humanize $type) -}}
 {{- $cta_url    := .Get "cta_url" -}}
 {{- $cta_label  := .Get "cta_label" -}}
 {{- $cta_newtab := eq (lower (.Get "cta_newtab" | default "false")) "true" -}}
@@ -23,9 +26,14 @@
 {{- else if eq $type "danger"  }}{{ $path = "M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2zM12 8v4M12 16h.01" -}}
 {{- end -}}
 <div class="callout callout--{{ $type }}" role="note">
+  {{- if not $user_title }}
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $path }}"/></svg>
-  <span class="sr-only">{{ $title }}</span>
+  {{- end }}
+  <span class="sr-only">{{ $sr_label }}</span>
   <div class="callout-body">
+    {{- if $user_title }}
+    <p class="callout-title">{{ $user_title }}</p>
+    {{- end }}
     {{ .Inner | markdownify }}
     {{- if and $cta_url $cta_label }}
     {{ partial "button.html" (dict
