@@ -152,20 +152,20 @@
 
 [data-theme="dark"] .callout--info {
     --callout-accent: #60a5fa;
-    --callout-bg: rgba(96, 165, 250, 0.12);
+    --callout-bg: rgba(96, 165, 250, 0.08);
 }
 
 [data-theme="dark"] .callout--tip {
     --callout-accent: #4ade80;
-    --callout-bg: rgba(74, 222, 128, 0.12);
+    --callout-bg: rgba(74, 222, 128, 0.08);
 }
 
 [data-theme="dark"] .callout--warning {
     --callout-accent: #fbbf24;
-    --callout-bg: rgba(251, 191, 36, 0.14);
+    --callout-bg: rgba(251, 191, 36, 0.09);
 }
 
 [data-theme="dark"] .callout--danger {
     --callout-accent: #f87171;
-    --callout-bg: rgba(248, 113, 113, 0.14);
+    --callout-bg: rgba(248, 113, 113, 0.09);
 }
