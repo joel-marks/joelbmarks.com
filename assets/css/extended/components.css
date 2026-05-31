@@ -150,22 +150,27 @@
 /* Dark — lift accent luminance and tint alpha so the wash stays readable
    against the dark background. `note` continues to use defaults. */
 
+/* Dark — the perceived brightness in dark is dominated by --callout-accent
+   (border + icon + title + CTA fill all consume it). Use muted versions of
+   each tint so all four elements quieten together; the background fill stays
+   minimal. Light mode and `note` are untouched. */
+
 [data-theme="dark"] .callout--info {
-    --callout-accent: #60a5fa;
-    --callout-bg: rgba(96, 165, 250, 0.04);
+    --callout-accent: #6e93c4;
+    --callout-bg: rgba(110, 147, 196, 0.04);
 }
 
 [data-theme="dark"] .callout--tip {
-    --callout-accent: #4ade80;
-    --callout-bg: rgba(74, 222, 128, 0.04);
+    --callout-accent: #6ea888;
+    --callout-bg: rgba(110, 168, 136, 0.04);
 }
 
 [data-theme="dark"] .callout--warning {
-    --callout-accent: #fbbf24;
-    --callout-bg: rgba(251, 191, 36, 0.05);
+    --callout-accent: #c4a070;
+    --callout-bg: rgba(196, 160, 112, 0.05);
 }
 
 [data-theme="dark"] .callout--danger {
-    --callout-accent: #f87171;
-    --callout-bg: rgba(248, 113, 113, 0.05);
+    --callout-accent: #c48080;
+    --callout-bg: rgba(196, 128, 128, 0.05);
 }
