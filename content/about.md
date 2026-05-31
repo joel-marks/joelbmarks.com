@@ -1,6 +1,11 @@
 ---
 title: "About"
 url: "/about/"
+menu:
+  main:
+    name: About
+    weight: 10
+    identifier: about
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

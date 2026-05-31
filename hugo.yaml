@@ -42,18 +42,3 @@ params:
     favicon32x32: "/favicon/favicon-32x32.png"
     apple_touch_icon: "/favicon/apple-touch-icon.png"
     safari_pinned_tab: "/favicon/safari-pinned-tab.svg"
-
-menu:
-  main:
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 10
-    - identifier: papers
-      name: Papers
-      url: /papers/
-      weight: 20
-    - identifier: markdown
-      name: Markdown
-      url: /markdown/
-      weight: 30
