@@ -1,15 +1,28 @@
-/* Paper single page: a full-width "sheet" plus a right-side slide-over TOC drawer
-   toggled from the nav. Uses PaperMod CSS variables; theme-aware, restrained. */
+/* Paper single page: an oversized tinted "sheet" that frames a canonical-width
+   reading column, plus a right-side, NON-MODAL slide-over TOC drawer toggled from
+   the nav. Uses PaperMod CSS variables; theme-aware, restrained.
+   NB: --main-width and global widths are NOT touched — only the paper page's own
+   .main is widened, scoped via :has(.paper-sheet), so normal pages are unaffected. */
 
-/* --- The sheet: single column, full readable width, centered --- */
+/* --- Width: widen ONLY the paper page's main container; inner stays canonical --- */
+.main:has(.paper-sheet) {
+    max-width: calc(var(--main-width) + 12rem);
+}
+
 .paper-sheet {
-    max-width: var(--main-width);
-    margin: 0 auto;
+    width: 100%;
     background: var(--entry);
     border: 1px solid var(--border);
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    padding: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* The reading column: canonical PaperMod width, centred — the extra sheet width
+   reads as a deliberate tinted frame around it. */
+.paper-inner {
+    max-width: var(--main-width);
+    margin-inline: auto;
 }
 
 .paper-title {
@@ -45,8 +58,13 @@
     margin-top: 8px;
 }
 
-/* --- Nav toggle button (relocated into .logo-switches by the template script).
-   Matches the theme-toggle: clean icon button, visible on desktop and mobile. --- */
+/* Click-to-scroll landing ~20% from the top of the viewport (native + smooth). */
+.paper-content :is(h2, h3, h4)[id] {
+    scroll-margin-top: 20vh;
+}
+
+/* --- Nav toggle button (relocated into .logo-switches by the script). Matches
+   the theme-toggle; visible on desktop and mobile. --- */
 .toc-toggle {
     padding: 0 0.4rem;
     background: none;
@@ -67,7 +85,8 @@
     color: var(--secondary);
 }
 
-/* --- The drawer: fixed, off-canvas on the right, overlays (does not squeeze) --- */
+/* --- The drawer: fixed, off-canvas on the right, overlays (does not squeeze and
+   does NOT dim the page — non-modal, no backdrop). --- */
 .toc-drawer {
     position: fixed;
     top: 0;
@@ -118,20 +137,10 @@
     color: var(--primary);
 }
 
-/* --- Backdrop: full-viewport scrim under the drawer, only when open --- */
-.toc-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    background: rgba(0, 0, 0, 0.35);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.toc-open .toc-backdrop {
-    opacity: 1;
-    visibility: visible;
+/* Scroll-spy: the link whose heading is at the 20% line. */
+.toc-drawer a.active {
+    color: var(--primary);
+    font-weight: 600;
 }
 
 /* --- Download button (near the metadata) --- */
