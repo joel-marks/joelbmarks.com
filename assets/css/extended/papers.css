@@ -29,6 +29,14 @@
     padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
 }
 
+/* Light mode only: nudge the sheet ~5% darker than --entry so it reads against
+   the page. Scoped to [data-theme="light"], which the head script always sets
+   when JS is on; dark mode (data-theme="dark", or no-JS auto-dark) never matches
+   this rule, so it is left exactly unchanged. */
+[data-theme="light"] .paper-sheet {
+    background: color-mix(in srgb, var(--entry) 95%, black);
+}
+
 .paper-inner {
     max-width: var(--main-width);
     margin-inline: auto;
