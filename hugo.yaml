@@ -15,6 +15,13 @@ minify:
   disableXML: true
   minifyOutput: true
 
+markup:
+  highlight:
+    # Class-based Chroma output (no baked-in inline colours), so PaperMod's
+    # theme CSS — and our light-mode --code-block-bg override — control the
+    # background. Highlighting stays ON; token palette is PaperMod's chroma CSS.
+    noClasses: false
+
 params:
   env: production
   title: "Joel B. Marks"

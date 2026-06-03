@@ -1,0 +1,26 @@
+/* Code-block background follows the theme.
+
+   PaperMod ships --code-block-bg DARK in both light and dark modes (its fenced
+   code blocks are dark by design) and forces it on .highlight / pre code with
+   !important. With class-based Chroma (markup.highlight.noClasses: false in
+   hugo.yaml) the block has no baked-in inline colour, so the background falls
+   through to this variable. We correct its LIGHT-mode value so the block tracks
+   the theme: light in light, dark in dark. Inline <code> already tracks the
+   theme via --code-bg and is left untouched. Token colours (PaperMod's
+   class-based Chroma palette) are unchanged. */
+:root {
+    --code-block-bg: rgb(245, 245, 245);
+}
+
+:root[data-theme="dark"] {
+    --code-block-bg: rgb(46, 46, 51);
+}
+
+/* Base (non-token) code text must follow the theme too: PaperMod hardcodes a
+   light grey (rgb(213, 213, 214)) tuned for its dark block, which is invisible
+   on a light background. Highlighted token spans keep their own Chroma colours;
+   only the inherited base colour changes. */
+.md-content pre code,
+.post-content pre code {
+    color: var(--content);
+}
