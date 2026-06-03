@@ -1,60 +1,67 @@
 {{- define "main" }}
 
-<div class="paper-layout">
+<article class="paper-sheet">
+  <h1 class="paper-title">{{ .Title }}</h1>
 
-  <article class="paper-sheet">
-    <h1 class="paper-title">{{ .Title }}</h1>
-
-    {{- with .Params.subtitle }}
-    <p class="paper-subtitle">{{ . }}</p>
-    {{- end }}
-
-    <div class="paper-meta">
-      {{- with .Params.author }}<span class="paper-meta-item">{{ . }}</span>{{ end }}
-      {{- if not .Date.IsZero }}<span class="paper-meta-item"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></span>{{ end }}
-      {{- if and (not .Lastmod.IsZero) (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}<span class="paper-meta-item">Updated {{ .Lastmod.Format "2 January 2006" }}</span>{{ end }}
-      {{- with .Params.version }}<span class="paper-meta-item">v{{ . }}</span>{{ end }}
-    </div>
-
-    {{- partial "paper-download.html" . }}
-
-    {{- if .Content }}
-    <div class="post-content md-content paper-content">
-      {{- if not (.Param "disableAnchoredHeadings") }}
-      {{- partial "anchored_headings.html" .Content -}}
-      {{- else }}{{ .Content }}{{ end }}
-    </div>
-    {{- end }}
-
-    <nav class="paper-back">
-      <a href="{{ .Parent.RelPermalink }}">&larr; All papers</a>
-    </nav>
-  </article>
-
-  {{- /* TOC lives OUTSIDE the sheet, and only when the paper has headings. */ -}}
-  {{- with .Fragments.Headings }}
-  <aside class="paper-toc">
-    <details>
-      <summary>Contents</summary>
-      {{ $.TableOfContents }}
-    </details>
-  </aside>
+  {{- with .Params.subtitle }}
+  <p class="paper-subtitle">{{ . }}</p>
   {{- end }}
 
-</div>
+  <div class="paper-meta">
+    {{- with .Params.author }}<span class="paper-meta-item">{{ . }}</span>{{ end }}
+    {{- if not .Date.IsZero }}<span class="paper-meta-item"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></span>{{ end }}
+    {{- if and (not .Lastmod.IsZero) (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}<span class="paper-meta-item">Updated {{ .Lastmod.Format "2 January 2006" }}</span>{{ end }}
+    {{- with .Params.version }}<span class="paper-meta-item">v{{ . }}</span>{{ end }}
+  </div>
 
-{{- /* Responsive TOC: open on desktop, collapsed on mobile; re-sync on the same
-       breakpoint the CSS grid uses (1024px). Inline + scoped to paper pages, so
-       it only loads here. Null-checked — the aside is absent when there are no
-       headings. */ -}}
+  {{- partial "paper-download.html" . }}
+
+  {{- if .Content }}
+  <div class="post-content md-content paper-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  <nav class="paper-back">
+    <a href="{{ .Parent.RelPermalink }}">&larr; All papers</a>
+  </nav>
+</article>
+
+{{- /* Right-side slide-over TOC. Rendered only when the paper has headings. The
+       toggle is relocated into the nav (.logo-switches) by the script below. */ -}}
+{{- with .Fragments.Headings }}
+<button id="toc-toggle" class="toc-toggle" aria-label="Toggle contents" aria-controls="toc-drawer" aria-expanded="false">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    <line x1="15" y1="3" x2="15" y2="21"></line>
+  </svg>
+</button>
+<div id="toc-backdrop" class="toc-backdrop"></div>
+<aside id="toc-drawer" class="toc-drawer" aria-label="Table of contents">{{ $.TableOfContents }}</aside>
+{{- end }}
+
+{{- /* Drawer behaviour: relocate the toggle next to the theme toggle, open/close
+       the drawer via a class on <html>, keep aria-expanded in sync, close on
+       backdrop click and Escape. Inline + scoped to paper pages; null-checked. */ -}}
 <script>
 (function () {
-  var d = document.querySelector('.paper-toc details');
-  if (!d) return;
-  var mq = window.matchMedia('(min-width: 1024px)');
-  function sync() { d.open = mq.matches; }
-  sync();
-  mq.addEventListener('change', sync);
+  var drawer = document.getElementById('toc-drawer'),
+      btn = document.getElementById('toc-toggle'),
+      backdrop = document.getElementById('toc-backdrop');
+  if (!drawer || !btn) return;
+  var sw = document.querySelector('.logo-switches');
+  if (sw) sw.appendChild(btn);
+  function setOpen(o) {
+    document.documentElement.classList.toggle('toc-open', o);
+    btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+  }
+  btn.addEventListener('click', function () {
+    setOpen(!document.documentElement.classList.contains('toc-open'));
+  });
+  if (backdrop) backdrop.addEventListener('click', function () { setOpen(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
 })();
 </script>
 
