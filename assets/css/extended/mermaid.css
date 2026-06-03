@@ -1,0 +1,8 @@
+/* Mermaid diagrams: centre and give vertical breathing room. Mermaid controls
+   its own internal styling/theme; keep this light. */
+.mermaid {
+    margin: calc(var(--content-gap) * 1.5) 0;
+    text-align: center;
+    line-height: normal;
+    overflow-x: auto;
+}

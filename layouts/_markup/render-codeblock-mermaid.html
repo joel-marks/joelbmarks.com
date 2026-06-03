@@ -1,0 +1,6 @@
+{{- /* Code-block render hook for ```mermaid fences only. Emits the fence body
+       inside a .mermaid container (Mermaid renders it client-side) and flags the
+       page so extend_footer.html loads the Mermaid script conditionally. All
+       other languages keep going through Chroma — this hook does not touch them. */ -}}
+<pre class="mermaid">{{- .Inner | htmlEscape | safeHTML }}</pre>
+{{ .Page.Store.Set "hasMermaid" true }}

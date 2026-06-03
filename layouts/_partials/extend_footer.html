@@ -1,0 +1,18 @@
+{{- /* Footer custom content area start */ -}}
+{{- /*     Insert any custom code web-analytics, resources, etc. here */ -}}
+
+{{- /* Mermaid: loaded ONLY on pages that contain a ```mermaid fence (flag set by
+       layouts/_markup/render-codeblock-mermaid.html). Pinned to the mermaid@11
+       stable major from jsDelivr. Theme is picked from data-theme at load time;
+       a live light/dark toggle won't re-render existing diagrams (known, accepted
+       limitation). This is the client-side JS dependency approved for this task. */ -}}
+{{ if .Store.Get "hasMermaid" }}
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: (document.documentElement.dataset.theme === 'dark') ? 'dark' : 'default'
+  });
+</script>
+{{ end }}
+{{- /* Footer custom content area end */ -}}
