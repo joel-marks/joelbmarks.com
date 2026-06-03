@@ -1,13 +1,27 @@
 /* Paper single page: a tinted "sheet" framing a canonical reading column, plus a
-   responsive "on this page" TOC — a persistent sticky rail (marginalia, page
-   background) on desktop, collapsing to a slide-in sheet on mobile.
+   responsive "on this page" TOC. The sheet sits on the page's true centre line;
+   on wide desktops the TOC is a RIGHT-MARGIN ADJUNCT hung off the sheet's right
+   edge (absolutely positioned, so it does NOT shift the sheet). On narrower
+   viewports it collapses to a slide-in sheet toggled from the nav.
    Uses PaperMod CSS variables; theme-aware, restrained.
    NB: global --main-width and normal-page widths are NOT touched — only the paper
-   page's own .main is widened (desktop, scoped via :has), so normal pages are
-   unaffected. The 1024px breakpoint is the desktop/mobile divide throughout. */
+   page's own .main is widened (scoped via :has), so normal pages are unaffected. */
+
+/* --- Width: widen the paper main to the SHEET width only (not sheet + rail), so
+   the centred .main keeps the sheet on the page centre line. --- */
+.main:has(.paper-layout) {
+    max-width: calc(var(--main-width) + 8rem);
+}
+
+.paper-layout {
+    position: relative;
+    max-width: 100%;
+    margin-inline: auto;
+}
 
 /* --- The sheet + canonical reading column --- */
 .paper-sheet {
+    width: 100%;
     background: var(--entry);
     border: 1px solid var(--border);
     border-radius: 2px;
@@ -58,7 +72,7 @@
 }
 
 /* --- Nav toggle (relocated into .logo-switches by the script). Mobile only;
-   hidden on desktop. Matches the theme-toggle. --- */
+   hidden on the wide-desktop rail. Matches the theme-toggle. --- */
 .toc-toggle {
     padding: 0 0.4rem;
     background: none;
@@ -170,41 +184,46 @@
     font-weight: 600;
 }
 
-/* --- DESKTOP (>= 1024px): in-layout sticky rail beside the sheet --- */
-@media screen and (min-width: 1024px) {
-    /* Widen ONLY the paper page's main to fit sheet + rail; normal pages untouched. */
-    .main:has(.paper-layout) {
-        max-width: calc(var(--main-width) + 28rem);
-    }
-
-    .paper-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 15rem;
-        gap: 2.5rem;
-        align-items: start;
-        justify-content: center;
-    }
-
-    /* Rail: marginalia on the PAGE background — no panel, no tint. */
+/* --- WIDE DESKTOP (>= 1320px): TOC as a right-margin adjunct. The breakpoint is
+   wide enough that the centred sheet PLUS the adjunct fit without the sheet moving
+   off-centre and without horizontal overflow (sheet content 800 + gap 24 + rail
+   208 needs >= ~1264px; 1320 leaves room for a vertical scrollbar). --- */
+@media screen and (min-width: 1320px) {
+    /* Hang the rail off the sheet's right edge; absolute => excluded from the
+       sheet's centring. */
     .paper-toc {
-        position: sticky;
-        top: calc(var(--header-height) + var(--gap));
-        height: auto;
-        max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
-        width: auto;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        right: auto;
+        margin-left: 1.5rem;
+        width: 13rem;
+        height: 100%;
         max-width: none;
         z-index: auto;
+        overflow: visible;
         background: transparent;
         color: var(--secondary);
-        border-inline-start: 1px solid var(--border);
+        border: 0;
         border-radius: 0;
-        padding: 0 0 0 1.25rem;
+        padding: 0;
         font-size: 0.8rem;
         transform: none;
         transition: none;
     }
 
-    /* No toggle, no close, no backdrop on desktop. */
+    /* Inner sticky: tracks scroll within the full-height adjunct; a thin left
+       divider aligns with the visible TOC (marginalia). */
+    .paper-toc nav {
+        position: sticky;
+        top: calc(var(--header-height) + var(--gap));
+        max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
+        overflow-y: auto;
+        border-inline-start: 1px solid var(--border);
+        padding-inline-start: 1.25rem;
+    }
+
+    /* No toggle, no close, no backdrop on the desktop rail. */
     .toc-toggle,
     .toc-close,
     .toc-backdrop {
