@@ -1,16 +1,13 @@
-/* Paper single page: an oversized tinted "sheet" that frames a canonical-width
-   reading column, plus a right-side, NON-MODAL slide-over TOC drawer toggled from
-   the nav. Uses PaperMod CSS variables; theme-aware, restrained.
-   NB: --main-width and global widths are NOT touched — only the paper page's own
-   .main is widened, scoped via :has(.paper-sheet), so normal pages are unaffected. */
+/* Paper single page: a tinted "sheet" framing a canonical reading column, plus a
+   responsive "on this page" TOC — a persistent sticky rail (marginalia, page
+   background) on desktop, collapsing to a slide-in sheet on mobile.
+   Uses PaperMod CSS variables; theme-aware, restrained.
+   NB: global --main-width and normal-page widths are NOT touched — only the paper
+   page's own .main is widened (desktop, scoped via :has), so normal pages are
+   unaffected. The 1024px breakpoint is the desktop/mobile divide throughout. */
 
-/* --- Width: widen ONLY the paper page's main container; inner stays canonical --- */
-.main:has(.paper-sheet) {
-    max-width: calc(var(--main-width) + 12rem);
-}
-
+/* --- The sheet + canonical reading column --- */
 .paper-sheet {
-    width: 100%;
     background: var(--entry);
     border: 1px solid var(--border);
     border-radius: 2px;
@@ -18,8 +15,6 @@
     padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
 }
 
-/* The reading column: canonical PaperMod width, centred — the extra sheet width
-   reads as a deliberate tinted frame around it. */
 .paper-inner {
     max-width: var(--main-width);
     margin-inline: auto;
@@ -40,7 +35,6 @@
     color: var(--secondary);
 }
 
-/* Meta line: small, muted, items separated by a discreet dot. */
 .paper-meta {
     margin: 1rem 0 0;
     font-family: var(--font-sans);
@@ -58,13 +52,13 @@
     margin-top: 8px;
 }
 
-/* Click-to-scroll landing ~20% from the top of the viewport (native + smooth). */
+/* Click-to-scroll landing ~20% from the top (native + smooth). */
 .paper-content :is(h2, h3, h4)[id] {
     scroll-margin-top: 20vh;
 }
 
-/* --- Nav toggle button (relocated into .logo-switches by the script). Matches
-   the theme-toggle; visible on desktop and mobile. --- */
+/* --- Nav toggle (relocated into .logo-switches by the script). Mobile only;
+   hidden on desktop. Matches the theme-toggle. --- */
 .toc-toggle {
     padding: 0 0.4rem;
     background: none;
@@ -85,9 +79,8 @@
     color: var(--secondary);
 }
 
-/* --- The drawer: fixed, off-canvas on the right, overlays (does not squeeze and
-   does NOT dim the page — non-modal, no backdrop). --- */
-.toc-drawer {
+/* --- TOC: MOBILE-FIRST = off-canvas slide-in sheet on the right --- */
+.paper-toc {
     position: fixed;
     top: 0;
     right: 0;
@@ -96,51 +89,127 @@
     max-width: 85vw;
     overflow-y: auto;
     z-index: 1000;
-    /* Tint distinct from --theme/--entry so it reads as a UX surface. */
-    background: var(--tertiary);
+    /* LIGHT, page-matching background so text is legible over content. */
+    background: var(--theme);
     color: var(--primary);
     border-inline-start: 1px solid var(--border);
-    padding: calc(var(--header-height) + 1rem) 1.5rem 2rem;
+    padding: calc(var(--header-height) + 0.5rem) 1.5rem 2rem;
     font-family: var(--font-sans);
     font-size: 0.9rem;
     transform: translateX(100%);
     transition: transform 0.25s ease;
 }
 
-.toc-open .toc-drawer {
+.toc-open .paper-toc {
     transform: translateX(0);
 }
 
-/* TOC list: discrete, muted, no bullets. */
-.toc-drawer nav ul {
+/* In-sheet close button (mobile) — closeable from within at any scroll position. */
+.toc-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--secondary);
+}
+
+.toc-close:hover,
+.toc-close:focus-visible {
+    color: var(--primary);
+}
+
+/* Backdrop scrim (mobile) — click to close. */
+.toc-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.toc-open .toc-backdrop {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* TOC list: discrete, muted, no bullets, generous spacing. */
+.paper-toc nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.toc-drawer nav ul ul {
+.paper-toc nav ul ul {
     padding-inline-start: 1rem;
 }
 
-.toc-drawer nav li {
-    margin: 0.4rem 0;
-    line-height: 1.4;
+.paper-toc nav li {
+    margin: 0.5rem 0;
+    line-height: 1.5;
 }
 
-.toc-drawer a {
+.paper-toc a {
     color: var(--secondary);
     text-decoration: none;
 }
 
-.toc-drawer a:hover,
-.toc-drawer a:focus-visible {
+.paper-toc a:hover,
+.paper-toc a:focus-visible {
     color: var(--primary);
 }
 
-/* Scroll-spy: the link whose heading is at the 20% line. */
-.toc-drawer a.active {
+/* Scroll-spy active link (rail + sheet). */
+.paper-toc a.active {
     color: var(--primary);
     font-weight: 600;
+}
+
+/* --- DESKTOP (>= 1024px): in-layout sticky rail beside the sheet --- */
+@media screen and (min-width: 1024px) {
+    /* Widen ONLY the paper page's main to fit sheet + rail; normal pages untouched. */
+    .main:has(.paper-layout) {
+        max-width: calc(var(--main-width) + 28rem);
+    }
+
+    .paper-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 15rem;
+        gap: 2.5rem;
+        align-items: start;
+        justify-content: center;
+    }
+
+    /* Rail: marginalia on the PAGE background — no panel, no tint. */
+    .paper-toc {
+        position: sticky;
+        top: calc(var(--header-height) + var(--gap));
+        height: auto;
+        max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
+        width: auto;
+        max-width: none;
+        z-index: auto;
+        background: transparent;
+        color: var(--secondary);
+        border-inline-start: 1px solid var(--border);
+        border-radius: 0;
+        padding: 0 0 0 1.25rem;
+        font-size: 0.8rem;
+        transform: none;
+        transition: none;
+    }
+
+    /* No toggle, no close, no backdrop on desktop. */
+    .toc-toggle,
+    .toc-close,
+    .toc-backdrop {
+        display: none;
+    }
 }
 
 /* --- Download button (near the metadata) --- */
