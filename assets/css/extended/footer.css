@@ -1,0 +1,65 @@
+/* Four-column corporate footer.
+   Layers a grid onto PaperMod's .footer (which already sets 12px / --secondary).
+   Restrained, low-ornament, theme-aware via PaperMod variables. The single-line
+   theme footer styles still apply elsewhere; only .footer--columns is gridded. */
+.footer.footer--columns {
+    max-width: var(--nav-width);
+    margin: 0 auto;
+    padding: calc(var(--gap) * 1.5) var(--gap);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gap);
+    align-items: start;
+    text-align: start;
+    line-height: 1.7;
+    color: var(--secondary);
+}
+
+.footer.footer--columns .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer.footer--columns .footer-col li {
+    margin: 0 0 0.45rem;
+}
+
+/* Links: subtle by default (muted, no underline), slightly stronger on hover. */
+.footer.footer--columns a {
+    color: var(--secondary);
+    text-decoration: none;
+    text-underline-offset: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.footer.footer--columns a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* Column 4: copyright stacked above a quieter "Powered by" credit. */
+.footer.footer--columns .footer-col--copyright {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer.footer--columns .footer-powered {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+/* Responsive: 4 -> 2 -> 1. */
+@media screen and (max-width: 768px) {
+    .footer.footer--columns {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: calc(var(--gap) * 1.25);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .footer.footer--columns {
+        grid-template-columns: 1fr;
+    }
+}

@@ -49,3 +49,30 @@ params:
     favicon32x32: "/favicon/favicon-32x32.png"
     apple_touch_icon: "/favicon/apple-touch-icon.png"
     safari_pinned_tab: "/favicon/safari-pinned-tab.svg"
+
+# Footer menus — rendered in columns 1-3 of the site footer (layouts/_partials/
+# footer.html). These are NOT the main nav (Decision 1: main menu lives in
+# per-page front matter). All entries below are PLACEHOLDERS — Joel to replace
+# the name/url of each with real footer links. Do not treat as final copy.
+menus:
+  footer1:
+    - name: "Footer link 1" # PLACEHOLDER — replace
+      url: "#"
+      weight: 10
+    - name: "Footer link 2" # PLACEHOLDER — replace
+      url: "#"
+      weight: 20
+  footer2:
+    - name: "Footer link 3" # PLACEHOLDER — replace
+      url: "#"
+      weight: 10
+    - name: "Footer link 4" # PLACEHOLDER — replace
+      url: "#"
+      weight: 20
+  footer3:
+    - name: "Footer link 5" # PLACEHOLDER — replace
+      url: "#"
+      weight: 10
+    - name: "Footer link 6" # PLACEHOLDER — replace
+      url: "#"
+      weight: 20
