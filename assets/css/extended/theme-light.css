@@ -1,0 +1,26 @@
+/* Global warm LIGHT theme. Overrides PaperMod's light theme variables (the theme
+   defines light on :root); the dark/[data-theme="dark"] overrides are left intact
+   and win by specificity, so dark mode is unchanged apart from the new --accent.
+   Loads after the theme's core vars (extended CSS), so these take effect.
+   Page background (--theme) is a visible step paler than cards (--entry). */
+:root,
+[data-theme="light"] {
+    --theme: #faf7f1;          /* page/site background — paler warm */
+    --entry: #f4f0e8;          /* cards + the paper sheet — warm cream */
+    --primary: #1a1714;        /* headings, strong */
+    --secondary: #6b6258;      /* muted text */
+    --content: #4a443d;        /* body text */
+    --border: #d8cfbe;         /* rules / borders */
+    --code-bg: #ece6da;        /* inline code */
+    --code-block-bg: #23201c;  /* code block (warm-dark) */
+    --accent: #7a4a2b;         /* links / accents (light) */
+}
+
+[data-theme="dark"] {
+    --accent: #b5743f;         /* new var only — keeps dark legible; no other dark change */
+}
+
+[data-theme="light"] .post-content a,
+[data-theme="light"] .paper-content a {
+    color: var(--accent);
+}

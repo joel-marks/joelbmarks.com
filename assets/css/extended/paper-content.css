@@ -1,0 +1,37 @@
+/* Paper-only typography. Fonts/metrics apply in both themes; colours come from the
+   global theme vars, so they are correct in light and dark automatically. Scoped to
+   `.paper-sheet .paper-content` so the serif treatment stays paper-only (chrome and
+   other pages keep their fonts). */
+:root {
+    --paper-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    --paper-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --paper-sans: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.paper-sheet .paper-content h1,
+.paper-sheet .paper-content h2,
+.paper-sheet .paper-content h3,
+.paper-sheet .paper-content h4 { font-family: var(--paper-serif); line-height: 1.2; color: var(--primary); }
+.paper-sheet .paper-content h1 { font-size: 34px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.3px; }
+.paper-sheet .paper-content h2 { font-size: 24px; font-weight: 600; margin: 42px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.paper-sheet .paper-content h3 { font-size: 18px; font-weight: 600; margin: 28px 0 6px; color: var(--accent); }
+.paper-sheet .paper-content h4 { font-size: 15px; font-weight: 600; margin: 20px 0 4px; }
+.paper-sheet .paper-content p,
+.paper-sheet .paper-content li { font-family: var(--paper-serif); font-size: 16.5px; line-height: 1.62; color: var(--content); }
+.paper-sheet .paper-content p { margin: 0 0 14px; }
+.paper-sheet .paper-content ul, .paper-sheet .paper-content ol { margin: 0 0 16px; padding-left: 22px; }
+.paper-sheet .paper-content li { margin: 4px 0; }
+.paper-sheet .paper-content strong { color: var(--primary); font-weight: 600; }
+.paper-sheet .paper-content em { color: var(--accent); }
+.paper-sheet .paper-content blockquote { margin: 18px 0; padding: 6px 20px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.paper-sheet .paper-content blockquote p { font-style: italic; color: var(--primary); }
+.paper-sheet .paper-content hr { border: 0; border-top: 1px solid var(--border); margin: 34px 0; }
+.paper-sheet .paper-content code { font-family: var(--paper-mono); font-size: 13px; background: var(--code-bg); padding: 2px 5px; border-radius: 4px; color: var(--accent); }
+.paper-sheet .paper-content pre { background: var(--code-block-bg); color: #e9e3d6; padding: 16px 18px; border-radius: 8px; overflow: auto; }
+.paper-sheet .paper-content pre code { background: transparent; color: inherit; padding: 0; }
+.paper-sheet .paper-content table { border-collapse: collapse; width: 100%; margin: 18px 0; font-family: var(--paper-sans); }
+.paper-sheet .paper-content th, .paper-sheet .paper-content td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; font-size: 14px; }
+.paper-sheet .paper-content th { font-weight: 600; background: var(--entry); color: var(--primary); }
+.paper-sheet .paper-content td { color: var(--content); }
+.paper-sheet .paper-content .mermaid { background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 22px 0; text-align: center; font-family: var(--paper-sans); }
+.paper-sheet .paper-content .mermaid svg { max-width: 100%; height: auto; }
