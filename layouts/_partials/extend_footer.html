@@ -3,15 +3,40 @@
 
 {{- /* Mermaid: loaded ONLY on pages that contain a ```mermaid fence (flag set by
        layouts/_markup/render-codeblock-mermaid.html). Pinned to the mermaid@11
-       stable major from jsDelivr. Theme is picked from data-theme at load time;
-       a live light/dark toggle won't re-render existing diagrams (known, accepted
-       limitation). This is the client-side JS dependency approved for this task. */ -}}
+       stable major from jsDelivr. Diagrams re-theme LIVE: each diagram's source
+       is captured before first render, then re-rendered on the site light/dark
+       toggle (MutationObserver on <html> data-theme) and on OS scheme changes
+       while in auto mode (no explicit pref-theme). Approved client-side JS dep. */ -}}
 {{ if .Store.Get "hasMermaid" }}
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: (document.documentElement.dataset.theme === 'dark') ? 'dark' : 'default'
+
+  const nodes = [...document.querySelectorAll('pre.mermaid')];
+  // capture each diagram's source BEFORE mermaid processes it
+  nodes.forEach(el => { el.dataset.source = el.textContent; });
+
+  const themeFor = () =>
+    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default';
+
+  async function renderMermaid() {
+    mermaid.initialize({ startOnLoad: false, theme: themeFor() });
+    nodes.forEach(el => {
+      el.removeAttribute('data-processed');
+      el.innerHTML = el.dataset.source;   // restore source for re-render
+    });
+    await mermaid.run({ nodes });
+  }
+
+  renderMermaid();
+
+  // re-render when the toggle flips data-theme on <html>
+  new MutationObserver(muts => {
+    if (muts.some(m => m.attributeName === 'data-theme')) renderMermaid();
+  }).observe(document.documentElement, { attributes: true });
+
+  // re-render on OS change when in auto/system mode (no explicit pref set)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!localStorage.getItem('pref-theme')) renderMermaid();
   });
 </script>
 {{ end }}
