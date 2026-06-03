@@ -17,8 +17,6 @@
         {{- with .Params.version }}<span class="paper-meta-item">v{{ . }}</span>{{ end }}
       </div>
 
-      {{- partial "paper-download.html" . }}
-
       {{- if .Content }}
       <div class="post-content md-content paper-content">
         {{- if not (.Param "disableAnchoredHeadings") }}
@@ -33,19 +31,24 @@
     </div>
   </article>
 
-  {{- /* "On this page": an in-layout sticky rail on desktop, a slide-in sheet on
-         mobile. Rendered only when the paper has headings. No "Contents" title. */ -}}
-  {{- with .Fragments.Headings }}
-  <aside id="paper-toc" class="paper-toc" aria-label="Table of contents">
-    <button class="toc-close" type="button" aria-label="Close contents">&times;</button>
-    {{ $.TableOfContents }}
+  {{- /* "On this page" sidebar — sticky rail on desktop, slide-in sheet on mobile.
+         Rendered for ALL papers: the TOC nav is conditional on headings, but the
+         download link is always present at the bottom (so it is reachable even on
+         a heading-less paper). No "Contents" title. */ -}}
+  <aside id="paper-toc" class="paper-toc" aria-label="On this page">
+    <button class="toc-close" type="button" aria-label="Close">&times;</button>
+    <div class="paper-toc-inner">
+      {{- with .Fragments.Headings }}
+      {{ $.TableOfContents }}
+      {{- end }}
+      {{- partial "paper-download.html" . }}
+    </div>
   </aside>
-  {{- end }}
 
 </div>
 
-{{- /* Mobile-only chrome (CSS hides on desktop): nav toggle + backdrop scrim. */ -}}
-{{- with .Fragments.Headings }}
+{{- /* Sidebar chrome (CSS hides on the desktop rail): nav toggle + backdrop scrim.
+       Always rendered so the download is reachable on mobile even with no TOC. */ -}}
 <button id="toc-toggle" class="toc-toggle" type="button" aria-label="Toggle contents" aria-controls="paper-toc" aria-expanded="false">
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -57,13 +60,13 @@
   </svg>
 </button>
 <div class="toc-backdrop"></div>
-{{- end }}
 
-{{- /* Consolidated TOC behaviour (replaces all prior TOC JS). Relocate the toggle
-       into the nav; toggle/close/backdrop/Escape all set or clear `toc-open` on
-       <html>; aria-expanded synced. Desktop visibility is forced by CSS (no
-       viewport-default JS); mobile starts closed. Scroll-spy marks the active link
-       at the 20% line. Inline + scoped to paper pages; everything null-checked. */ -}}
+{{- /* Consolidated sidebar behaviour. Relocate the toggle into the nav;
+       toggle/close/backdrop/Escape all set or clear `toc-open` on <html>;
+       aria-expanded synced. Desktop visibility is forced by CSS (no viewport
+       default JS); mobile starts closed. Scroll-spy (over `#` TOC links only)
+       marks the active link at the 20% line. Inline + scoped to paper pages;
+       everything null-checked. */ -}}
 <script>
 (function () {
   var toc = document.querySelector('.paper-toc'),

@@ -1,13 +1,14 @@
-{{- /* Reusable PDF download button. Renders nothing unless .Params.pdf is set.
-       Optional .Params.pages and .Params.filesize show as display metadata. */ -}}
-{{- with .Params.pdf }}
-<div class="paper-download">
-  <a class="paper-download-btn" href="{{ . | relURL }}" download>Download PDF</a>
-  {{- $meta := slice }}
-  {{- with $.Params.pages }}{{ $meta = $meta | append (printf "%d pages" .) }}{{ end }}
-  {{- with $.Params.filesize }}{{ $meta = $meta | append (printf "%s" .) }}{{ end }}
-  {{- with $meta }}
-  <span class="paper-download-meta">{{ delimit . " · " }}</span>
-  {{- end }}
-</div>
-{{- end }}
+{{- /* Subtle "Download PDF" link for the bottom of the paper TOC sidebar.
+       The URL is DERIVED from the page slug: <RelPermalink without trailing
+       slash> + ".pdf" => /papers/<slug>.pdf — the exact path the CI headless-
+       Chromium step writes the generated PDF to. There is no `pdf` front-matter
+       field. The file 404s in local `hugo server` (CI generates it on deploy). */ -}}
+{{- $url := printf "%s.pdf" (strings.TrimSuffix "/" .RelPermalink) -}}
+<a class="paper-download" href="{{ $url }}" download>
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>
+  Download PDF
+</a>

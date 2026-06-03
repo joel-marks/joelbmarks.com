@@ -225,9 +225,9 @@
         transition: none;
     }
 
-    /* Inner sticky: tracks scroll within the full-height adjunct; a thin left
-       divider aligns with the visible TOC (marginalia). */
-    .paper-toc nav {
+    /* Inner sticky (TOC + download): tracks scroll within the full-height
+       adjunct; a thin left divider aligns with the visible content (marginalia). */
+    .paper-toc .paper-toc-inner {
         position: sticky;
         top: calc(var(--header-height) + var(--gap));
         max-height: calc(100vh - var(--header-height) - var(--gap) * 2);
@@ -244,40 +244,30 @@
     }
 }
 
-/* --- Download button (near the metadata) --- */
+/* --- Download PDF: a subtle muted link at the bottom of the TOC sidebar
+   (slug-derived URL; not a filled button) --- */
 .paper-download {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 12px 16px;
-    margin: 32px 0 8px;
-    padding-top: 24px;
+    gap: 0.4em;
+    margin-top: 1.25rem;
+    padding-top: 0.85rem;
     border-top: 1px solid var(--border);
-}
-
-.paper-download-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: var(--radius);
-    background: var(--primary);
-    color: var(--theme);
     font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.2;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-}
-
-.paper-download-btn:hover,
-.paper-download-btn:focus-visible {
-    background: var(--secondary);
-}
-
-.paper-download-meta {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--secondary);
+    text-decoration: none;
+}
+
+.paper-download:hover,
+.paper-download:focus-visible {
+    color: var(--primary);
+}
+
+.paper-download svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
 }
 
 /* --- Back link --- */
@@ -294,4 +284,60 @@
 
 .paper-back a:hover {
     color: var(--primary);
+}
+
+/* --- Print: only the paper sheet content, full width, light and legible
+   regardless of theme. Used both for browser printing and for the CI headless-
+   Chromium PDF generation (which emulates print + light colour-scheme). --- */
+@media print {
+    .header,
+    .footer,
+    .paper-toc,
+    .toc-toggle,
+    .toc-backdrop,
+    .toc-close,
+    #theme-toggle,
+    #top-link,
+    .paper-back,
+    .paper-download {
+        display: none !important;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .main,
+    .main:has(.paper-layout) {
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .paper-layout {
+        display: block !important;
+        position: static !important;
+    }
+
+    .paper-sheet {
+        width: auto !important;
+        max-width: none !important;
+        background: #fff !important;
+        color: #000 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+
+    .paper-inner {
+        max-width: none !important;
+        margin: 0 !important;
+    }
+}
+
+@page {
+    margin: 2cm;
 }
