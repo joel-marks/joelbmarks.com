@@ -7,10 +7,13 @@
    NB: global --main-width and normal-page widths are NOT touched — only the paper
    page's own .main is widened (scoped via :has), so normal pages are unaffected. */
 
-/* --- Width: widen the paper main to the SHEET width only (not sheet + rail), so
-   the centred .main keeps the sheet on the page centre line. --- */
+/* --- Width: papers use a special layout at the nav/footer width. Mirror
+   PaperMod's `.header-nav` max-width expression; combined with .main's existing
+   `padding: var(--gap)` gutter and `margin: auto`, the paper's left/right edges
+   line up exactly with the nav (and footer) edges. Scoped via :has() — normal
+   pages keep --main-width. The centred reading column (.paper-inner) is unchanged. */
 .main:has(.paper-layout) {
-    max-width: calc(var(--main-width) + 8rem);
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
 }
 
 .paper-layout {
@@ -192,11 +195,13 @@
     font-weight: 600;
 }
 
-/* --- WIDE DESKTOP (>= 1320px): TOC as a right-margin adjunct. The breakpoint is
-   wide enough that the centred sheet PLUS the adjunct fit without the sheet moving
-   off-centre and without horizontal overflow (sheet content 800 + gap 24 + rail
-   208 needs >= ~1264px; 1320 leaves room for a vertical scrollbar). --- */
-@media screen and (min-width: 1320px) {
+/* --- WIDE DESKTOP (>= 1536px): TOC as a right-margin adjunct. The nav-width sheet
+   (content ~1024px, edges at centre ± 512) consumes the old right margin, so the
+   adjunct (gap 24 + rail 208) only fits beyond it once the viewport is wide
+   enough: 512 + 24 + 208 = 744 from centre needs viewport >= ~1488px; 1536 leaves
+   room for a vertical scrollbar with no horizontal overflow. Below this, the
+   mobile sheet/toggle is used. --- */
+@media screen and (min-width: 1536px) {
     /* Hang the rail off the sheet's right edge; absolute => excluded from the
        sheet's centring. */
     .paper-toc {
