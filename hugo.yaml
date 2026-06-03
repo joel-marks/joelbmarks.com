@@ -21,6 +21,11 @@ markup:
     # theme CSS — and our light-mode --code-block-bg override — control the
     # background. Highlighting stays ON; token palette is PaperMod's chroma CSS.
     noClasses: false
+  tableOfContents:
+    # Drives the paper sidebar TOC (.TableOfContents in layouts/papers/single.html).
+    startLevel: 2
+    endLevel: 3
+    ordered: false
 
 params:
   env: production

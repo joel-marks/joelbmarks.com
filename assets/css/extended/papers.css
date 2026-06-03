@@ -1,26 +1,137 @@
-/* Paper single page, papers index list, and PDF download button.
-   Uses PaperMod CSS variables; restrained, no shadows, hover-only motion. */
+/* Paper single page: a "sheet" container plus a separate sidebar TOC.
+   Uses PaperMod CSS variables; theme-aware, restrained, low-ornament.
+   IMPORTANT: the 1024px breakpoint below MUST match the matchMedia() value in
+   layouts/papers/single.html (the TOC open-state script). */
 
-/* --- Paper single --- */
-.paper-single .post-meta {
-    margin-top: 8px;
+/* Widen the page on paper pages only so the sheet + TOC fit side by side.
+   :has() is progressive enhancement — without it the layout simply stays at the
+   default width and the grid uses narrower columns. */
+.main:has(.paper-layout) {
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
 }
 
-.paper-summary {
-    margin-top: 16px;
+/* --- Layout: one column (mobile-first), two columns on desktop --- */
+.paper-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+}
+
+@media screen and (min-width: 1024px) {
+    .paper-layout {
+        grid-template-columns: minmax(0, 44rem) 14rem;
+        gap: calc(var(--gap) * 2);
+        justify-content: center;
+        align-items: start;
+    }
+}
+
+/* --- The sheet --- */
+.paper-sheet {
+    min-width: 0;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.paper-title {
+    margin: 0;
+    font-weight: 200;
+    font-size: clamp(2rem, 5vw, 44px);
+    line-height: 1.15;
+}
+
+.paper-subtitle {
+    margin: 0.6rem 0 0;
     font-family: var(--font-serif);
-    font-size: 1.15rem;
-    line-height: 1.5;
+    font-size: 1.25rem;
+    line-height: 1.4;
     color: var(--secondary);
 }
 
-/* --- Download button --- */
+/* Meta line: small, muted, items separated by a discreet dot. */
+.paper-meta {
+    margin: 1rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.paper-meta-item + .paper-meta-item::before {
+    content: "·";
+    margin: 0 0.5em;
+    color: var(--secondary);
+}
+
+.paper-content {
+    margin-top: 8px;
+}
+
+/* --- Sidebar TOC (outside the sheet) --- */
+/* Mobile: full-width collapsible card. */
+.paper-toc {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+}
+
+.paper-toc summary {
+    cursor: pointer;
+    padding: 0.75rem 0;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.paper-toc nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.paper-toc nav ul ul {
+    padding-inline-start: 1rem;
+}
+
+.paper-toc nav li {
+    margin: 0.35rem 0;
+    line-height: 1.4;
+}
+
+.paper-toc a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.paper-toc a:hover,
+.paper-toc a:focus-visible {
+    color: var(--primary);
+}
+
+/* Desktop: discrete sticky sidebar — a left rule instead of a card. */
+@media screen and (min-width: 1024px) {
+    .paper-toc {
+        position: sticky;
+        top: calc(var(--header-height) + var(--gap));
+        background: transparent;
+        border: 0;
+        border-inline-start: 1px solid var(--border);
+        border-radius: 0;
+        padding: 0 0 0 1.25rem;
+    }
+}
+
+/* --- Download button (near the metadata) --- */
 .paper-download {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 16px;
-    margin: 40px 0 8px;
+    margin: 32px 0 8px;
     padding-top: 24px;
     border-top: 1px solid var(--border);
 }
