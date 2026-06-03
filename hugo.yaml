@@ -56,23 +56,11 @@ params:
 # the name/url of each with real footer links. Do not treat as final copy.
 menus:
   footer1:
-    - name: "Footer link 1" # PLACEHOLDER — replace
-      url: "#"
+    - name: "Markdown cheatsheet" # PLACEHOLDER — replace
+      url: "/markdown"
       weight: 10
-    - name: "Footer link 2" # PLACEHOLDER — replace
-      url: "#"
+    - name: "Theme cheatsheet" # PLACEHOLDER — replace
+      url: "/theme"
       weight: 20
-  footer2:
-    - name: "Footer link 3" # PLACEHOLDER — replace
-      url: "#"
-      weight: 10
-    - name: "Footer link 4" # PLACEHOLDER — replace
-      url: "#"
-      weight: 20
-  footer3:
-    - name: "Footer link 5" # PLACEHOLDER — replace
-      url: "#"
-      weight: 10
-    - name: "Footer link 6" # PLACEHOLDER — replace
-      url: "#"
-      weight: 20
+
+
