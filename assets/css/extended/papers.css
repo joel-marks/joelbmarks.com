@@ -17,19 +17,38 @@
 }
 
 .paper-layout {
+    --torn-h: 4px; /* the tear band height; matches the mask's top band */
     position: relative;
     max-width: 100%;
     margin-inline: auto;
 }
 
+/* A thin strip directly BEHIND the sheet's torn top band. The mask teeth reveal
+   it, so the torn contour reads in the margin colour (var(--border)) — the same
+   as the side/bottom borders — and adapts in both themes. Provides the contrast
+   the page background (≈ paper colour) cannot. Hidden in print. */
+.paper-layout::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--torn-h);
+    background: var(--border);
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* --- The sheet + canonical reading column --- */
 .paper-sheet {
+    /* Paint above the reveal strip so only the mask teeth expose it. */
+    position: relative;
+    z-index: 1;
     width: 100%;
     background: var(--entry);
     border: 1px solid var(--border);
     /* Top corners give way to the tear; keep the bottom corners rounded. */
     border-radius: 0 0 2px 2px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
     /* Torn top edge, applied to THIS element (it paints the cream background +
        1px border). Two non-overlapping mask bands union (default composite):
@@ -319,7 +338,8 @@
     #theme-toggle,
     #top-link,
     .paper-back,
-    .paper-download {
+    .paper-download,
+    .paper-layout::before {
         display: none !important;
     }
 
