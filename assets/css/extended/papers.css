@@ -41,7 +41,13 @@
     left: 0;
     right: 0;
     height: var(--torn-h);
-    background: var(--paper-tear);
+    /* Multi-tone fibre lip: the exposed fringe (the part above the tear contour)
+       grades from the edge tone at the very top into the paper colour at the band
+       bottom. Built from theme vars, so it adapts in light and dark. */
+    background: linear-gradient(to bottom,
+        var(--paper-tear) 0%,
+        color-mix(in srgb, var(--paper-tear), var(--entry) 55%) 55%,
+        var(--entry) 100%);
     z-index: 0;
     pointer-events: none;
 }
@@ -71,10 +77,10 @@
        tear line starts and ends at y=2 with matching tangents → seamless repeat;
        it swings ~0.6→3.4 (≈3px visible, within the 4px tile). */
     -webkit-mask:
-        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='4'%20viewBox='0%200%2048%204'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,2%20C5,0.6%2011,3.4%2018,2%20C24,0.7%2030,3.3%2036,2%20C40,0.7%2043,3.4%2048,2%20L48,4%20L0,4%20Z'%20fill='black'/%3E%3C/svg%3E") top left / 48px var(--torn-h) repeat-x,
+        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='10'%20viewBox='0%200%20200%2010'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,5L6,1.5L14,4L20,2L28,7L34,3.5L40,8.5L46,5L52,1.2L60,6L66,2.5L74,9L80,4L88,1.8L96,6.5L102,3L110,8L118,2L126,5.5L134,1.5L142,7L150,3.2L158,8.8L166,4.5L174,2L182,6L188,3L194,8.5L200,5L200,10L0,10Z'%20fill='black'/%3E%3C/svg%3E") top left / 200px var(--torn-h) repeat-x,
         linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
     mask:
-        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='4'%20viewBox='0%200%2048%204'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,2%20C5,0.6%2011,3.4%2018,2%20C24,0.7%2030,3.3%2036,2%20C40,0.7%2043,3.4%2048,2%20L48,4%20L0,4%20Z'%20fill='black'/%3E%3C/svg%3E") top left / 48px var(--torn-h) repeat-x,
+        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='10'%20viewBox='0%200%20200%2010'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,5L6,1.5L14,4L20,2L28,7L34,3.5L40,8.5L46,5L52,1.2L60,6L66,2.5L74,9L80,4L88,1.8L96,6.5L102,3L110,8L118,2L126,5.5L134,1.5L142,7L150,3.2L158,8.8L166,4.5L174,2L182,6L188,3L194,8.5L200,5L200,10L0,10Z'%20fill='black'/%3E%3C/svg%3E") top left / 200px var(--torn-h) repeat-x,
         linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
 }
 
