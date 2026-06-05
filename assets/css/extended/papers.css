@@ -18,9 +18,16 @@
 
 .paper-layout {
     --torn-h: 10px; /* single control for the tear depth: mask tile size, solid band, and reveal strip all reference it */
+    --paper-tear: var(--border); /* torn-outline colour; light unchanged, brightened in dark below */
     position: relative;
     max-width: 100%;
     margin-inline: auto;
+}
+
+/* Dark only: the --border outline is nearly invisible on the dark page, so brighten
+   the torn edge to a muted, visible grey (not a harsh white line). Light is untouched. */
+[data-theme="dark"] .paper-layout {
+    --paper-tear: var(--secondary);
 }
 
 /* A thin strip directly BEHIND the sheet's torn top band. The mask teeth reveal
@@ -34,7 +41,7 @@
     left: 0;
     right: 0;
     height: var(--torn-h);
-    background: var(--border);
+    background: var(--paper-tear);
     z-index: 0;
     pointer-events: none;
 }
