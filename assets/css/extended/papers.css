@@ -24,12 +24,29 @@
 
 /* --- The sheet + canonical reading column --- */
 .paper-sheet {
+    /* Seamless ≤4px torn-edge tile (alpha-only; colour irrelevant). The tear line
+       starts and ends at y=2 with the same tangent, so it repeats with no seam. */
+    --torn-h: 4px;
+    --torn-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='4' viewBox='0 0 48 4' preserveAspectRatio='none'%3E%3Cpath d='M0,2 C6,1.2 12,2.9 18,2 C24,1.1 30,2.8 36,2 C40,2.6 42,2.8 48,2 L48,4 L0,4 Z' fill='%23000'/%3E%3C/svg%3E");
     width: 100%;
     background: var(--entry);
     border: 1px solid var(--border);
-    border-radius: 2px;
+    /* Top corners give way to the tear; keep the bottom corners rounded. */
+    border-radius: 0 0 2px 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
+    /* Torn top edge. Two non-overlapping mask bands union (default composite):
+       (1) the torn SVG tile across the top ≤4px band (repeat-x), opaque below the
+       tear line / transparent above; (2) a solid fill for everything below that
+       band. Because the mask is alpha-only it is identical in light and dark — the
+       paler page shows through the tear, matching the side/bottom page margins —
+       and the side/bottom borders are left intact (only the top is clipped). */
+    -webkit-mask:
+        var(--torn-tile) top left / 48px var(--torn-h) repeat-x,
+        linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
+    mask:
+        var(--torn-tile) top left / 48px var(--torn-h) repeat-x,
+        linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
 }
 
 .paper-inner {
@@ -332,6 +349,9 @@
         border-radius: 0 !important;
         box-shadow: none !important;
         padding: 0 !important;
+        /* Remove the torn edge so the generated PDF has a clean straight top. */
+        -webkit-mask: none !important;
+        mask: none !important;
     }
 
     .paper-inner {
