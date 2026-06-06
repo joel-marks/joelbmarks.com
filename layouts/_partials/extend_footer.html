@@ -15,11 +15,39 @@
   // capture each diagram's source BEFORE mermaid processes it
   nodes.forEach(el => { el.dataset.source = el.textContent; });
 
-  const themeFor = () =>
-    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'default';
+  // Config for the current theme. Hand-drawn look in BOTH themes, with a fixed
+  // handDrawnSeed so rough.js is deterministic (stable CI PDFs). Dark keeps
+  // mermaid's 'dark' theme unchanged. Light uses the 'base' theme with
+  // themeVariables resolved live from the site's warm palette (CSS custom
+  // properties via getComputedStyle, so they track theme-light.css). No
+  // handwriting fontFamily — the default clean type is kept.
+  function mermaidConfig() {
+    const root = document.documentElement;
+    const base = { startOnLoad: false, look: 'handDrawn', handDrawnSeed: 1 };
+    if (root.dataset.theme === 'dark') {
+      return { ...base, theme: 'dark' };
+    }
+    const cs = getComputedStyle(root);
+    const v = name => cs.getPropertyValue(name).trim();
+    const cream = v('--entry'), brown = v('--accent'),
+          darkBrown = v('--primary'), tan = v('--border');
+    return {
+      ...base,
+      theme: 'base',
+      themeVariables: {
+        background: 'transparent',
+        primaryColor: cream,         // node fill = warm cream
+        primaryBorderColor: brown,   // node border = brown
+        primaryTextColor: darkBrown, // node text = dark brown
+        lineColor: brown,            // edges / lines = brown
+        secondaryColor: tan,
+        tertiaryColor: cream,
+      },
+    };
+  }
 
   async function renderMermaid() {
-    mermaid.initialize({ startOnLoad: false, theme: themeFor() });
+    mermaid.initialize(mermaidConfig());
     nodes.forEach(el => {
       el.removeAttribute('data-processed');
       el.innerHTML = el.dataset.source;   // restore source for re-render
