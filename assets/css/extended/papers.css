@@ -17,71 +17,19 @@
 }
 
 .paper-layout {
-    --torn-h: 10px; /* single control for the tear depth: mask tile size, solid band, and reveal strip all reference it */
-    --paper-tear: var(--border); /* torn-outline colour; light unchanged, brightened in dark below */
     position: relative;
     max-width: 100%;
     margin-inline: auto;
 }
 
-/* Dark only: the --border outline is nearly invisible on the dark page, so brighten
-   the torn edge to a muted, visible grey (not a harsh white line). Light is untouched. */
-[data-theme="dark"] .paper-layout {
-    --paper-tear: var(--secondary);
-}
-
-/* A thin strip directly BEHIND the sheet's torn top band. The mask teeth reveal
-   it, so the torn contour reads in the margin colour (var(--border)) — the same
-   as the side/bottom borders — and adapts in both themes. Provides the contrast
-   the page background (≈ paper colour) cannot. Hidden in print. */
-.paper-layout::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--torn-h);
-    /* Multi-tone fibre lip: the exposed fringe (the part above the tear contour)
-       grades from the edge tone at the very top into the paper colour at the band
-       bottom. Built from theme vars, so it adapts in light and dark. */
-    background: linear-gradient(to bottom,
-        var(--paper-tear) 0%,
-        color-mix(in srgb, var(--paper-tear), var(--entry) 55%) 55%,
-        var(--entry) 100%);
-    z-index: 0;
-    pointer-events: none;
-}
-
 /* --- The sheet + canonical reading column --- */
 .paper-sheet {
-    /* Paint above the reveal strip so only the mask teeth expose it. */
-    position: relative;
-    z-index: 1;
     width: 100%;
     background: var(--entry);
-    /* Borders share the torn-edge colour: --paper-tear (= --border in light,
-       brightened in dark) so all edges match. */
-    border: 1px solid var(--paper-tear);
-    /* Top corners give way to the tear; keep the bottom corners rounded. */
-    border-radius: 0 0 2px 2px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem);
-    /* Torn top edge, applied to THIS element (it paints the cream background +
-       1px border). Two non-overlapping mask bands union (default composite):
-       (1) a seamless inline-SVG tear tile across the top 4px band (repeat-x),
-       opaque below the tear line / transparent above; (2) a solid fill for
-       everything below. The SVG is ALPHA-only (fill: black — colour irrelevant),
-       fully percent-encoded (spaces %20, brackets %3C/%3E, NO '#'), and inlined
-       directly (no var()) so the mask-image always loads and the mask is not
-       dropped. Identical in light and dark — the paler page shows through the tear,
-       matching the side/bottom page margins; side/bottom borders stay intact. The
-       tear line starts and ends at y=2 with matching tangents → seamless repeat;
-       it swings ~0.6→3.4 (≈3px visible, within the 4px tile). */
-    -webkit-mask:
-        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='10'%20viewBox='0%200%20200%2010'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,5L6,1.5L14,4L20,2L28,7L34,3.5L40,8.5L46,5L52,1.2L60,6L66,2.5L74,9L80,4L88,1.8L96,6.5L102,3L110,8L118,2L126,5.5L134,1.5L142,7L150,3.2L158,8.8L166,4.5L174,2L182,6L188,3L194,8.5L200,5L200,10L0,10Z'%20fill='black'/%3E%3C/svg%3E") top left / 200px var(--torn-h) repeat-x,
-        linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
-    mask:
-        url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='10'%20viewBox='0%200%20200%2010'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0,5L6,1.5L14,4L20,2L28,7L34,3.5L40,8.5L46,5L52,1.2L60,6L66,2.5L74,9L80,4L88,1.8L96,6.5L102,3L110,8L118,2L126,5.5L134,1.5L142,7L150,3.2L158,8.8L166,4.5L174,2L182,6L188,3L194,8.5L200,5L200,10L0,10Z'%20fill='black'/%3E%3C/svg%3E") top left / 200px var(--torn-h) repeat-x,
-        linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--torn-h)) no-repeat;
 }
 
 .paper-inner {
@@ -353,8 +301,7 @@
     #theme-toggle,
     #top-link,
     .paper-back,
-    .paper-download,
-    .paper-layout::before {
+    .paper-download {
         display: none !important;
     }
 
@@ -385,9 +332,6 @@
         border-radius: 0 !important;
         box-shadow: none !important;
         padding: 0 !important;
-        /* Remove the torn edge so the generated PDF has a clean straight top. */
-        -webkit-mask: none !important;
-        mask: none !important;
     }
 
     .paper-inner {
