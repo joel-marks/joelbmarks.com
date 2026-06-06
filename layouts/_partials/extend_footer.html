@@ -28,50 +28,69 @@
 
     const cs = getComputedStyle(root);
     const v = name => cs.getPropertyValue(name).trim();
-    // hex mix so fills/browns derive from the live palette (mermaid can't read var()).
-    // The only subtlety lever is fill COLOUR (rough.js hatch density isn't exposed),
-    // so a subtle hachure = a paler fill, a few shades off the page.
-    const hx = s => { s = s.replace('#', '').trim(); return [0, 2, 4].map(i => parseInt(s.slice(i, i + 2), 16)); };
+    // Robust colour handling: parse #hex AND rgb()/rgba() — PaperMod's DARK palette
+    // vars are rgb(), so a hex-only parser would break dark. The only subtlety lever
+    // is fill COLOUR (rough.js hatch density isn't exposed), so a subtle hachure = a
+    // fill only a few shades off the page.
+    const parse = s => {
+      s = s.trim();
+      if (s[0] === '#') { s = s.slice(1); if (s.length === 3) s = [...s].map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(s.slice(i, i + 2), 16)); }
+      const m = s.match(/rgba?\(([^)]+)\)/);
+      return m ? m[1].split(',').slice(0, 3).map(n => parseInt(n, 10)) : [0, 0, 0];
+    };
     const toHex = a => '#' + a.map(n => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0')).join('');
-    const mix = (a, b, t) => { const A = hx(a), B = hx(b); return toHex(A.map((c, i) => c * (1 - t) + B[i] * t)); };
+    const mix = (a, b, t) => { const A = parse(a), B = parse(b); return toHex(A.map((c, i) => c * (1 - t) + B[i] * t)); };
+    const c = name => toHex(parse(v(name))); // resolve a CSS var to clean hex
 
     const accent = v('--accent'), entry = v('--entry');
+    const text = c('--primary'); // theme-adaptive: dark text in light, light text in dark
+
+    // Quadrant block (fills + uniformly legible text). Set in BOTH branches with the
+    // SAME keys as the flowchart vars so a light<->dark toggle fully overrides
+    // (mermaid.initialize merges configs cumulatively — otherwise values leak).
+    const quad = (fills, t) => ({
+      quadrant1Fill: fills[0], quadrant2Fill: fills[1], quadrant3Fill: fills[2], quadrant4Fill: fills[3],
+      quadrant1TextFill: t, quadrant2TextFill: t, quadrant3TextFill: t, quadrant4TextFill: t,
+      quadrantPointTextFill: t, quadrantTitleFill: t, quadrantXAxisTextFill: t, quadrantYAxisTextFill: t,
+    });
 
     if (dark) {
-      // Faint node-fill hatch a few shades off the dark page; quadrantChart can't
-      // hatch (handDrawn unsupported) so its solid fills get subtle warm-dark tints.
+      const fill = c('--tertiary'); // node fill: a few shades LIGHTER than the dark page (faint hatch)
+      const line = c('--accent');   // warm brown, legible on dark
       return {
         ...base,
         theme: 'dark',
         themeVariables: {
-          mainBkg: v('--tertiary'),   // node fill = faint hatch over the dark page
-          quadrant1Fill: mix(entry, accent, 0.12),
-          quadrant2Fill: mix(entry, accent, 0.20),
-          quadrant3Fill: mix(entry, accent, 0.16),
-          quadrant4Fill: mix(entry, accent, 0.24),
+          background: 'transparent',
+          primaryColor: fill,
+          mainBkg: fill,
+          primaryBorderColor: line,
+          lineColor: line,
+          primaryTextColor: text,        // light, legible
+          secondaryColor: fill,
+          tertiaryColor: c('--entry'),
+          edgeLabelBackground: 'transparent',
+          ...quad([mix(entry, accent, 0.12), mix(entry, accent, 0.20), mix(entry, accent, 0.16), mix(entry, accent, 0.24)], text),
         },
       };
     }
 
-    const darkBrown = v('--primary'), tan = v('--border');
-    const softBrown = mix(accent, entry, 0.2);  // ~20% softer brown (borders/lines)
-    const paleFill = mix(accent, entry, 0.78);  // node fill: pale warm tan, faint scribble
+    const fill = mix(accent, entry, 0.86); // node fill: paler warm tan (~10% lighter than before)
+    const line = mix(accent, entry, 0.2);  // muted brown (borders/lines)
     return {
       ...base,
       theme: 'base',
       themeVariables: {
         background: 'transparent',
-        primaryColor: paleFill,        // node fill = pale warm tan so the hachure is faint
-        primaryBorderColor: softBrown, // node border = muted brown
-        primaryTextColor: darkBrown,   // node text = dark brown
-        lineColor: softBrown,          // edges / lines = muted brown
-        secondaryColor: tan,
-        tertiaryColor: entry,
-        edgeLabelBackground: 'transparent', // no highlight box behind edge labels
-        quadrant1Fill: mix(accent, entry, 0.90), // pale warm quadrant tints (solid)
-        quadrant2Fill: mix(accent, entry, 0.84),
-        quadrant3Fill: mix(accent, entry, 0.87),
-        quadrant4Fill: mix(accent, entry, 0.81),
+        primaryColor: fill,
+        mainBkg: fill,
+        primaryBorderColor: line,
+        lineColor: line,
+        primaryTextColor: text,          // dark, legible
+        secondaryColor: c('--border'),
+        tertiaryColor: c('--entry'),
+        edgeLabelBackground: 'transparent',
+        ...quad([mix(accent, entry, 0.90), mix(accent, entry, 0.84), mix(accent, entry, 0.87), mix(accent, entry, 0.81)], text),
       },
     };
   }
