@@ -23,32 +23,55 @@
   // handwriting fontFamily — the default clean type is kept.
   function mermaidConfig() {
     const root = document.documentElement;
+    const dark = root.dataset.theme === 'dark';
     const base = { startOnLoad: false, look: 'handDrawn', handDrawnSeed: 1 };
-    if (root.dataset.theme === 'dark') {
-      return { ...base, theme: 'dark' };
-    }
+
     const cs = getComputedStyle(root);
     const v = name => cs.getPropertyValue(name).trim();
-    // hex helpers: derive a softer (muted) brown by mixing toward the cream paper
+    // hex mix so fills/browns derive from the live palette (mermaid can't read var()).
+    // The only subtlety lever is fill COLOUR (rough.js hatch density isn't exposed),
+    // so a subtle hachure = a paler fill, a few shades off the page.
     const hx = s => { s = s.replace('#', '').trim(); return [0, 2, 4].map(i => parseInt(s.slice(i, i + 2), 16)); };
     const toHex = a => '#' + a.map(n => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0')).join('');
     const mix = (a, b, t) => { const A = hx(a), B = hx(b); return toHex(A.map((c, i) => c * (1 - t) + B[i] * t)); };
 
-    const cream = v('--entry'), brown = v('--accent'),
-          darkBrown = v('--primary'), fill = v('--secondary'), tan = v('--border');
-    const softBrown = mix(brown, cream, 0.2); // ~20% lighter/softer, still warm
+    const accent = v('--accent'), entry = v('--entry');
+
+    if (dark) {
+      // Faint node-fill hatch a few shades off the dark page; quadrantChart can't
+      // hatch (handDrawn unsupported) so its solid fills get subtle warm-dark tints.
+      return {
+        ...base,
+        theme: 'dark',
+        themeVariables: {
+          mainBkg: v('--tertiary'),   // node fill = faint hatch over the dark page
+          quadrant1Fill: mix(entry, accent, 0.12),
+          quadrant2Fill: mix(entry, accent, 0.20),
+          quadrant3Fill: mix(entry, accent, 0.16),
+          quadrant4Fill: mix(entry, accent, 0.24),
+        },
+      };
+    }
+
+    const darkBrown = v('--primary'), tan = v('--border');
+    const softBrown = mix(accent, entry, 0.2);  // ~20% softer brown (borders/lines)
+    const paleFill = mix(accent, entry, 0.78);  // node fill: pale warm tan, faint scribble
     return {
       ...base,
       theme: 'base',
       themeVariables: {
         background: 'transparent',
-        primaryColor: fill,            // node fill = warm taupe so the hachure reads
+        primaryColor: paleFill,        // node fill = pale warm tan so the hachure is faint
         primaryBorderColor: softBrown, // node border = muted brown
         primaryTextColor: darkBrown,   // node text = dark brown
         lineColor: softBrown,          // edges / lines = muted brown
         secondaryColor: tan,
-        tertiaryColor: cream,
+        tertiaryColor: entry,
         edgeLabelBackground: 'transparent', // no highlight box behind edge labels
+        quadrant1Fill: mix(accent, entry, 0.90), // pale warm quadrant tints (solid)
+        quadrant2Fill: mix(accent, entry, 0.84),
+        quadrant3Fill: mix(accent, entry, 0.87),
+        quadrant4Fill: mix(accent, entry, 0.81),
       },
     };
   }
