@@ -29,19 +29,26 @@
     }
     const cs = getComputedStyle(root);
     const v = name => cs.getPropertyValue(name).trim();
+    // hex helpers: derive a softer (muted) brown by mixing toward the cream paper
+    const hx = s => { s = s.replace('#', '').trim(); return [0, 2, 4].map(i => parseInt(s.slice(i, i + 2), 16)); };
+    const toHex = a => '#' + a.map(n => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0')).join('');
+    const mix = (a, b, t) => { const A = hx(a), B = hx(b); return toHex(A.map((c, i) => c * (1 - t) + B[i] * t)); };
+
     const cream = v('--entry'), brown = v('--accent'),
-          darkBrown = v('--primary'), tan = v('--border');
+          darkBrown = v('--primary'), fill = v('--secondary'), tan = v('--border');
+    const softBrown = mix(brown, cream, 0.2); // ~20% lighter/softer, still warm
     return {
       ...base,
       theme: 'base',
       themeVariables: {
         background: 'transparent',
-        primaryColor: cream,         // node fill = warm cream
-        primaryBorderColor: brown,   // node border = brown
-        primaryTextColor: darkBrown, // node text = dark brown
-        lineColor: brown,            // edges / lines = brown
+        primaryColor: fill,            // node fill = warm taupe so the hachure reads
+        primaryBorderColor: softBrown, // node border = muted brown
+        primaryTextColor: darkBrown,   // node text = dark brown
+        lineColor: softBrown,          // edges / lines = muted brown
         secondaryColor: tan,
         tertiaryColor: cream,
+        edgeLabelBackground: 'transparent', // no highlight box behind edge labels
       },
     };
   }
