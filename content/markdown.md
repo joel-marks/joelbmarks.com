@@ -1,28 +1,20 @@
 ---
 title: "Markdown"
 url: "/markdown/"
-date: 2099-01-01
-menu:
-  main:
-    name: Markdown
-    weight: 30
-    identifier: markdown
+date: 2000-01-01
 ---
+
+## Git gfm cheatsheet
 
 GitHub Flavored Markdown (GFM) is the dialect of Markdown used by GitHub — extending CommonMark with tables, fenced code blocks, task lists, strikethrough, and autolinks. This page renders a sample of those features as a typography and styling reference.
 
 ## Sample
 
 # Heading 1 — wire title
-
 ## Heading 2
-
 ### Heading 3
-
 #### Heading 4
-
 ##### Heading 5
-
 ###### Heading 6
 
 ## Body text & emphasis
