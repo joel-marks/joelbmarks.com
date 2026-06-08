@@ -35,3 +35,12 @@
 .paper-sheet .paper-content td { color: var(--content); }
 .paper-sheet .paper-content .mermaid { background: transparent; padding: 18px; margin: 22px 0; text-align: center; font-family: var(--paper-sans); }
 .paper-sheet .paper-content .mermaid svg { max-width: 100%; height: auto; }
+/* Edge labels: no backing box in either theme — the edgeLabelBackground
+   themeVariable alone doesn't always remove it (mermaid still draws a label
+   background span/rect). Scoped to edge labels only; node fills untouched. */
+.paper-sheet .paper-content .mermaid .edgeLabel,
+.paper-sheet .paper-content .mermaid .edgeLabel p,
+.paper-sheet .paper-content .mermaid .edgeLabel div,
+.paper-sheet .paper-content .mermaid .edgeLabel .labelBkg { background: transparent !important; background-color: transparent !important; }
+.paper-sheet .paper-content .mermaid .edgeLabel rect,
+.paper-sheet .paper-content .mermaid .edgeLabel .labelBkg rect { fill: transparent !important; }
