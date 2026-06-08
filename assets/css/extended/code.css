@@ -26,3 +26,28 @@
 .post-content pre code {
     color: var(--content);
 }
+
+/* Code-block border — theme-aware, visible against BOTH the block and the page.
+   Reusing --border reads in light but is ~invisible on the dark block, so dark
+   gets a lighter dedicated tone. */
+:root {
+    --code-border: var(--border);
+}
+
+:root[data-theme="dark"] {
+    --code-border: rgb(70, 71, 75);
+}
+
+.md-content .highlight:not(table),
+.paper-sheet .paper-content pre {
+    border: 1px solid var(--code-border);
+}
+
+/* Long lines wrap instead of scrolling horizontally. */
+.md-content pre code,
+.post-content pre code,
+.paper-sheet .paper-content pre code,
+.chroma .cl {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
