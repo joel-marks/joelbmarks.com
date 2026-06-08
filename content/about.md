@@ -14,5 +14,5 @@ My route to this work has been less direct than most. I spent roughly two decade
 
 In 2025 I joined an international NGO's digital communications team in an AI advisory capacity. The engagement resulted in an organisation-wide whitepaper on AI in editorial practice. That work produced the framework behind the Editorial AI Standards Review now offered here.
 
-I work in a coaching style, which means I do not arrive with a finished policy. The audit is done in conversation with your communications team, who know their pipeline better than any outside consultant ever could. My job is the structured way of bringing that knowledge out, naming the risks, and producing the document your board needs.
+I work in a coaching style, which means I do not arrive with a finished policy. The audit is done in conversation with your communications team, who know their pipeline better than any outside consultant ever could. My job is to bring that knowledge out in a structured way, name the risks, and produce the document your board needs.
 For enquiries, the simplest route is LinkedIn.

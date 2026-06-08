@@ -8,4 +8,4 @@ menu:
     identifier: papers
 ---
 
-Original frameworks and whitepapers on responsible AI adoption and organisational change.
+Original frameworks on responsible AI adoption and organisational change.

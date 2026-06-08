@@ -3,7 +3,10 @@ title: "Editorial AI Standards Review for values-led organisations."
 ---
 
 
-Most communications teams are now using AI tools faster than their governance can keep up. Until that gap is closed, the cost of any AI incident is paid in public trust, not in budget. Trustees, donors and regulators are already asking. The press will follow.
+Most communications teams are now using AI tools faster than their governance can keep up. Until that gap is closed, the cost of any AI incident is paid in public trust, not in budget. Trustees, donors, and regulators are already asking. The press will follow.
+
+The fix is not to lock AI down. The audit starts from what your team already does well with it, names the risks honestly, and builds governance around that capability rather than over it.
+
 I provide a fixed-scope audit that addresses this directly: a mapped publishing pipeline, a tailored risk register, and a draft policy or charter your board can stand behind. Delivered remote-first, over three to four weeks.
 
 ## Questions this audit answers
@@ -21,8 +24,9 @@ Six working days of structured work over three to four weeks. A discovery call w
 
 ## Who it's for
 
-NGOs, charities, B-Corps, and mission-led organisations whose public credibility rests on what their communications team produces. Particularly where AI use has moved faster than the policy framework around it, and where a generic template will not be enough to satisfy the people asking.
-What you leave with
+NGOs, charities, B Corps, and mission-led organisations whose public credibility rests on what their communications team produces. Particularly where AI use has moved faster than the policy framework around it, and where a generic template will not be enough to satisfy the people asking.
+
+## What you leave with
 
 The ability to answer a trustee, respond to a journalist, or walk into a board meeting with the AI question handled. Behind that, the underlying artefacts: an organisation-specific understanding of where AI sits in your editorial process today, a risk register written for you rather than adapted from someone else's, and a policy you can put on a board agenda.
 Some organisations work with me on a quarterly basis after the initial review. Most do not need to.
@@ -31,8 +35,8 @@ Some organisations work with me on a quarterly basis after the initial review. M
 
 {{< spacer 3rem >}}
 
-{{< infobox type="info" title="Available now" cta_url="/papers/" cta_label="See the whitepaper" >}}
-A whitepaper produced during a recent advisory engagement with an international NGO is available in the papers section.
+{{< infobox type="note" title="Available now" cta_url="/papers/" cta_label="See the framework" >}}
+A framework for AI adoption derived from a recent advisory engagement with an international NGO is available in the papers section.
 {{< /infobox >}}
 
 
