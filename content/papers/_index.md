@@ -8,4 +8,4 @@ menu:
     identifier: papers
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Original frameworks and whitepapers on responsible AI adoption and organisational change.
