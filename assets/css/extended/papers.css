@@ -290,7 +290,10 @@
 
 /* --- Print: only the paper sheet content, full width, light and legible
    regardless of theme. Used both for browser printing and for the CI headless-
-   Chromium PDF generation (which emulates print + light colour-scheme). --- */
+   Chromium PDF generation (which emulates print + light colour-scheme).
+   !important is intentional here: these print resets must override theme screen
+   styles of varying/higher specificity (e.g. body{background:var(--theme)}, the
+   #theme-toggle / #top-link IDs, and our own .main:has(.paper-layout) rule). --- */
 @media print {
     .header,
     .footer,
