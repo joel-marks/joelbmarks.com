@@ -197,3 +197,33 @@
     --callout-accent: #c48080;
     --callout-bg: rgba(196, 128, 128, 0.05);
 }
+
+/* --- Papers list: two-column doc-icon cards (papers/list.html only) ----------
+   Wraps PaperMod's .post-entry card (chrome reused) into a media layout: a large
+   document icon beside the existing entry content. NON-collapsing — stays
+   two-column at every width; the icon column shrinks hard on narrow screens so the
+   content stays readable. */
+.paper-card {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.paper-card-media {
+    flex: 0 0 auto;
+    /* large on desktop, shrunk hard on narrow viewports */
+    width: clamp(2rem, 10vw, 4.5rem);
+    color: var(--secondary);
+}
+
+.paper-card-media svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.paper-card-content {
+    flex: 1 1 auto;
+    min-width: 0; /* let the content column shrink/wrap instead of overflowing */
+}
