@@ -1,9 +1,11 @@
 {{- /* Generic button shortcode — wraps the button partial.
-       Named params: url, label, optional size ("" | "sm"), optional newtab.
-       Call with url="https://example.com" label="Read more" newtab="true". */ -}}
+       Named params: url, label, optional size ("" | "sm"), optional newtab,
+       optional icon (e.g. icon="linkedin"). Call with
+       url="https://example.com" label="Read more" newtab="true". */ -}}
 {{- $newtab := eq (lower (.Get "newtab" | default "false")) "true" -}}
 {{- partial "button.html" (dict
     "url"    (.Get "url")
     "label"  (.Get "label")
     "size"   (.Get "size" | default "")
-    "newtab" $newtab) -}}
+    "newtab" $newtab
+    "icon"   (.Get "icon" | default "")) -}}

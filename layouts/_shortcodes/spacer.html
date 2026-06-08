@@ -1,0 +1,5 @@
+{{- /* Vertical spacer. Usage: a spacer shortcode with a size arg (defaults 1rem).
+       Reusable: the size arg is passed as a CSS custom property; the height comes
+       from the .spacer class in components.css (no bespoke inline style block). */ -}}
+{{- $size := .Get 0 | default "1rem" -}}
+<div class="spacer" aria-hidden="true" style="--spacer-size: {{ $size }}"></div>

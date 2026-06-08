@@ -27,9 +27,9 @@ What you leave with
 The ability to answer a trustee, respond to a journalist, or walk into a board meeting with the AI question handled. Behind that, the underlying artefacts: an organisation-specific understanding of where AI sits in your editorial process today, a risk register written for you rather than adapted from someone else's, and a policy you can put on a board agenda.
 Some organisations work with me on a quarterly basis after the initial review. Most do not need to.
 
-{{< button url="https://linkedin.com/in/joelbmarks" label="Contact on LinkedIn" >}}
+{{< button url="https://linkedin.com/in/joelbmarks" label="Contact on LinkedIn" icon="linkedin" >}}
 
-
+{{< spacer 3rem >}}
 
 {{< infobox type="info" title="Available now" cta_url="/papers/" cta_label="See the whitepaper" >}}
 A whitepaper produced during a recent advisory engagement with an international NGO is available in the papers section.

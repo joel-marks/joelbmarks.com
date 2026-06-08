@@ -43,6 +43,29 @@
     font-size: 0.85rem;
 }
 
+/* Optional leading icon (icon="..."): only icon buttons become flex, so text-only
+   buttons are unchanged. Icon ~1em, vertically centred, small gap to the label. */
+.btn--icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45em;
+}
+
+.btn-icon {
+    display: inline-flex;
+}
+
+.btn-icon svg {
+    width: 1em;
+    height: 1em;
+}
+
+/* Vertical spacer shortcode: height from the size arg (passed as --spacer-size). */
+.spacer {
+    height: var(--spacer-size, 1rem);
+}
+
 /* Beat the theme's `.md-content a:not(.anchor)` underline rule across all
    states — equal-specificity rule, ours loads later. */
 .md-content a.btn,
