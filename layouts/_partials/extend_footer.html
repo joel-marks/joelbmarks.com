@@ -70,7 +70,7 @@
           secondaryColor: fill,
           tertiaryColor: c('--entry'),
           edgeLabelBackground: 'transparent',
-          ...quad([mix(entry, accent, 0.12), mix(entry, accent, 0.20), mix(entry, accent, 0.16), mix(entry, accent, 0.24)], text),
+          ...quad([fill, fill, fill, fill], text), // quadrant fills = the flowchart node fill (--tertiary)
         },
       };
     }
