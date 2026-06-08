@@ -43,6 +43,14 @@
     border: 1px solid var(--code-border);
 }
 
+/* Plain (no-language) fenced blocks render as a bare <pre><code> with NO .highlight
+   wrapper, so the rule above misses them. Border their code box (it carries the
+   --code-block-bg + radius). Language-tagged blocks (pre.chroma) are bordered via
+   .highlight above; diagrams (pre.mermaid) stay frameless. */
+.md-content pre:not(.chroma):not(.mermaid) code {
+    border: 1px solid var(--code-border);
+}
+
 /* Long lines wrap instead of scrolling horizontally. */
 .md-content pre code,
 .post-content pre code,
