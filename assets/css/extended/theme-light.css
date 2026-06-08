@@ -12,7 +12,9 @@
     --content: #4a443d;        /* body text */
     --border: #d8cfbe;         /* rules / borders */
     --code-bg: #ece6da;        /* inline code */
-    --code-block-bg: #23201c;  /* code block (warm-dark) */
+    /* --code-block-bg (fenced code blocks) is owned by code.css — light
+       rgb(245,245,245) / dark rgb(46,46,51). Do NOT set it here: a #23201c value
+       here regressed light code blocks to a dark background. */
     --accent: #7a4a2b;         /* links / accents (light) */
 }
 

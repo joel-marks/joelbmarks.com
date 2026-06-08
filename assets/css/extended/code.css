@@ -8,6 +8,8 @@
    the theme: light in light, dark in dark. Inline <code> already tracks the
    theme via --code-bg and is left untouched. Token colours (PaperMod's
    class-based Chroma palette) are unchanged. */
+/* LOAD-BEARING: the light code-block background. Must remain the last light
+   --code-block-bg declaration (don't re-set it in theme-light.css). */
 :root {
     --code-block-bg: rgb(245, 245, 245);
 }
