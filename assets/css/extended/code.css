@@ -39,7 +39,7 @@
 }
 
 .md-content .highlight:not(table),
-.paper-sheet .paper-content pre {
+.paper-sheet .paper-content pre:not(.mermaid) {
     border: 1px solid var(--code-border);
 }
 
