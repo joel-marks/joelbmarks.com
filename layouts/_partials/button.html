@@ -4,10 +4,10 @@
          label  (required) string
          size   (optional) "" | "sm"
          newtab (optional) bool — adds target="_blank" rel="noopener noreferrer"
-         icon   (optional) string — name of a PaperMod svg.html icon (e.g.
-                "linkedin"). When set, renders that inline SVG before the label in
-                a .btn-icon span; the button gains .btn--icon. Omit -> no icon,
-                rendered exactly as before.
+         icon   (optional) string — name passed to the icon partial (e.g.
+                "linkedin" -> Phosphor linkedin-logo). When set, renders that inline
+                SVG before the label in a .btn-icon span; the button gains
+                .btn--icon. Omit -> no icon, rendered exactly as before.
        Renders an <a> (this is a navigation control, not a <button>). */ -}}
 {{- $url    := .url -}}
 {{- $label  := .label -}}
@@ -19,5 +19,5 @@
 {{- if $icon }}{{ $class = printf "%s btn--icon" $class }}{{ end -}}
 <a class="{{ $class }}" href="{{ $url }}"
    {{- if $newtab }} target="_blank" rel="noopener noreferrer"{{ end }}>
-   {{- with $icon }}<span class="btn-icon" aria-hidden="true">{{ partial "svg.html" (dict "name" .) }}</span>{{ end -}}
+   {{- with $icon }}<span class="btn-icon" aria-hidden="true">{{ partial "icon" (dict "name" .) }}</span>{{ end -}}
    {{ $label }}</a>
