@@ -39,7 +39,7 @@ params:
   ShowShareButtons: false
   ShowPostNavLinks: false
   ShowBreadCrumbs: false
-  ShowCodeCopyButtons: false
+  ShowCodeCopyButtons: true
   ShowToc: false
   ShowWordCount: false
   hideFooter: false

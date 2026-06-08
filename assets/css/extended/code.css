@@ -51,3 +51,47 @@
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
+
+/* Copy-to-clipboard button (PaperMod's ShowCodeCopyButtons, restyled): a subtle
+   Phosphor icon top-right, theme-aware via currentColor. Always present (not
+   hover-only) for touch/keyboard; a code-coloured background so it never overlaps
+   the wrapped code text or the border. Overrides PaperMod's dark-pill default. */
+.copy-code,
+div.highlight:hover .copy-code,
+pre:hover .copy-code {
+    display: inline-flex;
+}
+
+.copy-code {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 4px;
+    color: var(--secondary);
+    background: var(--code-block-bg);
+    border: 0;
+    border-radius: var(--radius);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.copy-code svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.highlight:hover .copy-code,
+.copy-code:hover,
+.copy-code:focus-visible {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.copy-code.copied {
+    opacity: 1;
+    color: #2f9e44; /* success green, readable in both themes */
+}

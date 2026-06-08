@@ -130,17 +130,23 @@
 
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons")) }}
 <script>
+    const copyIcon = `{{ partial "icon.html" (dict "name" "copy") }}`;
+    const checkIcon = `{{ partial "icon.html" (dict "name" "check") }}`;
     document.querySelectorAll('pre > code').forEach((codeblock) => {
         const container = codeblock.parentNode.parentNode;
 
         const copybutton = document.createElement('button');
+        copybutton.type = 'button';
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
+        copybutton.setAttribute('aria-label', 'Copy code');
+        copybutton.innerHTML = copyIcon;
 
         function copyingDone() {
-            copybutton.innerHTML = '{{- i18n "code_copied" | default "copied!" }}';
+            copybutton.innerHTML = checkIcon;
+            copybutton.classList.add('copied');
             setTimeout(() => {
-                copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
+                copybutton.innerHTML = copyIcon;
+                copybutton.classList.remove('copied');
             }, 2000);
         }
 
