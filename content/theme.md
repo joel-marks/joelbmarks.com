@@ -2,6 +2,7 @@
 title: "Theme additional"
 url: "/theme/"
 date: 2000-01-01
+hideMeta: true
 ---
 
 ## Custom CSS components (additional to PaperMod theme)
@@ -15,6 +16,8 @@ date: 2000-01-01
 {{< button url="/papers/" label="See papers" >}}
 {{< button url="https://example.com" label="External (new tab)" newtab="true" >}}
 {{< button url="/about/" label="Smaller" size="sm" >}}
+
+{{< button url="https://example.com" label="External (new tab)" icon="linkedin" >}}
 
 
 ### Infoboxes

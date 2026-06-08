@@ -2,6 +2,7 @@
 title: "Markdown"
 url: "/markdown/"
 date: 2000-01-01
+hideMeta: true
 ---
 
 ## Git gfm cheatsheet
@@ -52,11 +53,14 @@ Task list:
 Inline `const x = 42;` then a fenced block (highlighting disabled by config):
 
 ```js
-function greet(name) {
-  // monospace block — tests pre/code rendering
-  return `Hello, ${name}`;
+async function fetchPublishedPapers(endpoint) {
+  const response = await fetch(endpoint);
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+  const papers = await response.json();
+  return papers.filter((paper) => paper.status === "published");
 }
-greet("Joel B. Marks");
 ```
 
 ```bash
