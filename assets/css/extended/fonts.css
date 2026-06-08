@@ -49,6 +49,8 @@ textarea {
 .logo a {
     font-family: var(--font-title);
     font-weight: 300;
+    /* ~5% smaller than PaperMod's 24px default. */
+    font-size: 22.8px;
 }
 
 /* Heading scale — no content heading (H2–H6) smaller than the 18px body.
