@@ -2,8 +2,8 @@
 title: "A Capability-First Framework for Responsible AI Adoption"
 subtitle: "From shadow use to resourceful adoption: a continuous model for organisations."
 author: "Joel B. Marks"
-date: 2026-04-12
-lastmod: 2026-05-20
+date: 2026-05-20
+lastmod: 2026-06-05
 version: "1.1"
 description: "A capability-first model for governing the AI you already use."
 summary: "A capability-first model for governing the AI you already use."
