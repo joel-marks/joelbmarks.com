@@ -121,7 +121,15 @@
       "Bash(python3 -)",
       "Bash(sed -n '/^- `\\\\/layouts\\\\/papers\\\\/list.html`/,/^## Workflow/p' BRIEF.md)",
       "Bash(git commit -q -m ' *)",
-      "Bash(gh run *)"
+      "Bash(gh run *)",
+      "Bash(curl -s -m 20 \"https://api.github.com/repos/joel-marks/joelbmarks.com/actions/runs?per_page=5\")",
+      "Bash(curl -s -m 20 \"https://api.github.com/repos/joel-marks/joelbmarks.com/actions/runs/31118416633/jobs\")",
+      "Bash(curl -s -m 20 \"https://api.github.com/repos/joel-marks/joelbmarks.com\")",
+      "Bash(curl -s -m 20 \"https://api.github.com/repos/joel-marks/joelbmarks.com/commits/a1d4d16/check-runs\")",
+      "Bash(curl -s -m 20 \"https://www.githubstatus.com/api/v2/summary.json\")",
+      "Bash(git diff *)",
+      "Bash(git -C themes/PaperMod log --oneline -1)",
+      "Bash(git -C themes/PaperMod status --short)"
     ]
   }
 }
