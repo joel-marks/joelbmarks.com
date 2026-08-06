@@ -1,0 +1,7 @@
+{{- /* Demos section list (scoped to /demos/ only). Renders identically to the
+       papers index — both call the shared `card-list.html` partial. Demo SINGLE
+       pages deliberately have NO override: they fall through to PaperMod's
+       default single.html, the same basic rendering as /about/. */ -}}
+{{- define "main" }}
+{{- partial "card-list.html" . }}
+{{- end }}{{- /* end main */ -}}
