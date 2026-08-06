@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(hugo --quiet --destination /tmp/hugobuild --baseURL \"http://localhost/\")",
+      "Bash(echo \"exit=$?\")",
+      "Bash(git add *)",
+      "Bash(git commit -m 'fix: make code block background follow theme in light mode *)",
+      "Bash(git commit -m 'feat: add four-column footer with config-defined footer menus *)",
+      "Bash(git commit -m 'feat: add mermaid diagram support via code-block render hook *)",
+      "Bash(git commit -m 'docs: add /theme/ component reference page and link footer to cheatsheets *)",
+      "Bash(grep -rnA6 '^\\\\.main' themes/PaperMod/assets/css/)",
+      "Bash(git commit -m 'feat: dedicated paper presentation \\(sheet layout + sidebar TOC, mobile-aware\\) *)",
+      "Bash(grep -nA3 'logo-switches\\\\|theme-toggle' themes/PaperMod/layouts/_partials/header.html)",
+      "Bash(grep -rnA10 'theme-toggle' themes/PaperMod/assets/css/common/header.css)",
+      "Bash(git commit -m 'feat: paper sheet width, default-open TOC, 20% scroll landing and scroll-spy *)",
+      "Bash(git commit -m 'feat: rebuild paper TOC as responsive on-this-page \\(desktop rail, mobile sheet\\) *)",
+      "Bash(git commit -m 'fix: centre paper sheet on page; TOC as right-margin adjunct *)",
+      "Bash(grep -rnA8 '^\\\\.nav ' themes/PaperMod/assets/css/common/header.css)",
+      "Bash(grep -nA4 'footer--columns {' assets/css/extended/footer.css)",
+      "Bash(grep -nA10 '\\\\.nav {' themes/PaperMod/assets/css/common/header.css)",
+      "Bash(git commit -m 'feat: papers use nav/footer-width special layout *)",
+      "Bash(git commit -m 'feat: slug-derived PDF link, sidebar download, print stylesheet *)",
+      "Bash(git commit -m 'ci: pin Hugo to 0.160.1 to match local *)",
+      "Bash(git commit -m 'style: global warm light theme + paper-only serif typography *)",
+      "Bash(git commit -m 'style\\(paper\\): serif toned title, sans subtitle, labelled metadata + rule *)",
+      "Bash(sed -n '/^\\\\.paper-layout {/,/^}/p' assets/css/extended/papers.css)",
+      "Bash(sed -n '/^\\\\.paper-sheet {/,/box-shadow/p' assets/css/extended/papers.css)",
+      "Bash(git commit -m 'fix\\(paper\\): reveal border-coloured strip behind torn top for contrast *)",
+      "Bash(git commit -m 'style\\(paper\\): brighten torn edge outline in dark mode *)",
+      "Bash(git commit -m 'style\\(paper\\): match sheet borders to torn edge colour in dark mode *)",
+      "Bash(git commit -m 'style\\(paper\\): rougher torn contour + multi-tone fibre lip *)",
+      "Bash(sed -n '/^\\\\.paper-layout {/,/^}/p; /\\\\[data-theme=\"dark\"\\\\] \\\\.paper-layout {/,/^}/p; /^\\\\.paper-layout::before {/,/^}/p' assets/css/extended/papers.css)",
+      "Bash(sed -n '/^\\\\.paper-sheet {/,/^}/p' assets/css/extended/papers.css)",
+      "Bash(awk '/@media print/{f=1} f&&/display: none/{print NR\": found display:none group\"} f&&/}/{c++; if\\(c>20\\)exit}' assets/css/extended/papers.css)",
+      "Bash(git commit -m 'feat\\(mermaid\\): hand-drawn look + warm light palette *)",
+      "Bash(git commit -m 'style\\(paper\\): increase sheet corner radius to 8px *)",
+      "Bash(grep -nA1 '\\\\.mermaid {' assets/css/extended/paper-content.css)",
+      "Bash(git commit -m 'style\\(mermaid\\): visible hachure fill, muted brown, drop frame + edge-label bg *)",
+      "Bash(git commit -m 'style\\(mermaid\\): subtle hachure fill both themes, harmonise quadrant fills *)"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+/* Uniform page background across every page kind.
+
+   PaperMod's theme-vars.css gives LIST pages (home, /papers/, 404, taxonomies —
+   `<body class="list">`) a background of var(--code-bg), while SINGLE pages
+   (/about/, papers, the demo pages) use var(--theme). In the warm light palette
+   that reads as two different page colours (#ece6da vs #faf7f1).
+
+   Standardise on --theme (the about-page colour) for all page kinds. Written
+   theme-agnostically: dark mode already resolves .list to --theme upstream, so
+   this is a no-op there and stays correct if the dark palette changes. */
+.list {
+    background: var(--theme);
+}
