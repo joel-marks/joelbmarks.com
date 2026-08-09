@@ -3,6 +3,12 @@ title: "Markdown"
 url: "/markdown/"
 date: 2000-01-01
 hideMeta: true
+# Internal reference page: keep it out of the sitemap and out of the index.
+# robotsNoIndex is PaperMod's own flag (layouts/_partials/head.html) and flips
+# the single robots meta to "noindex, nofollow".
+sitemap:
+  disable: true
+robotsNoIndex: true
 ---
 
 ## Git gfm cheatsheet

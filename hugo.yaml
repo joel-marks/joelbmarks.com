@@ -8,6 +8,12 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
+# The site uses no tags or categories, so the taxonomy and term list pages were
+# empty output and empty sitemap entries. Disabling both kinds removes them.
+disableKinds:
+  - taxonomy
+  - term
+
 pagination:
   pagerSize: 10
 
