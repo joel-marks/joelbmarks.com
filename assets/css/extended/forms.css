@@ -1,0 +1,187 @@
+/* Form styling — currently the contact form only
+   (layouts/_shortcodes/contact-form.html). Theme variables only, no framework.
+
+   Two layers:
+   1. Our own markup (.osf-contact / .osf-form and the fields inside it).
+   2. The OpenSendForm embed script's injected chrome (.osf-root, .osf-dialog,
+      .osf-submitted, .osf-btn, .osf-form-error, .osf-field-error, .osf-invalid,
+      .osf-spinner). The script ships its own <style> block, injected into
+      <head> at runtime — i.e. AFTER this file — so anything we want to win is
+      written at two-class specificity. It also reads a small set of --osf-*
+      custom properties for its colours; mapping those to the site palette on
+      the wrapper is what keeps the success dialog and error strip on-brand. */
+
+.osf-contact {
+    /* Embed-script tokens -> site palette. */
+    --osf-radius: var(--radius);
+    --osf-accent: var(--accent);
+    --osf-on-accent: var(--theme);
+    --osf-surface: var(--entry);
+    --osf-border: var(--border);
+    --osf-error: #b3261e;
+    --osf-overlay-bg: rgba(250, 247, 241, 0.94); /* light --theme at 94% */
+
+    margin: var(--content-gap) 0 0;
+}
+
+[data-theme="dark"] .osf-contact {
+    --osf-error: #c48080;                        /* muted, as the dark callouts */
+    --osf-overlay-bg: rgba(29, 30, 32, 0.94);    /* dark --theme at 94% */
+}
+
+/* --- The form panel ------------------------------------------------------ */
+
+.osf-contact .osf-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    padding: clamp(1.1rem, 4vw, 1.75rem);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.osf-contact .osf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.osf-contact .osf-field-label {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--primary);
+}
+
+.osf-contact input[type="email"],
+.osf-contact input[type="text"]:not([name="_osf_hp"]),
+.osf-contact textarea {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--primary);
+    /* A step paler than the panel, mirroring the site's --theme / --entry step. */
+    background: var(--theme);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.osf-contact textarea {
+    min-height: 9rem;
+    resize: vertical;
+}
+
+.osf-contact input::placeholder,
+.osf-contact textarea::placeholder {
+    color: var(--secondary);
+}
+
+.osf-contact input:hover,
+.osf-contact textarea:hover {
+    border-color: var(--secondary);
+}
+
+.osf-contact input:focus-visible,
+.osf-contact textarea:focus-visible {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+/* --- Submit -------------------------------------------------------------- */
+
+/* .btn (components.css) is authored for anchors; these are the <button>
+   deltas plus the filled-accent treatment used for a primary form action. */
+.osf-contact .osf-submit {
+    align-self: flex-start;
+    cursor: pointer;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--theme);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.osf-contact .osf-submit:hover,
+.osf-contact .osf-submit:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--theme);
+    filter: brightness(0.92);
+}
+
+.osf-contact .osf-submit[disabled] {
+    cursor: default;
+    opacity: 0.65;
+    filter: none;
+}
+
+/* --- Embed-injected chrome ----------------------------------------------- */
+
+.osf-contact .osf-form-error,
+.osf-contact .osf-field-error {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+}
+
+.osf-contact .osf-form-error {
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+}
+
+.osf-contact .osf-field-error {
+    margin: 0;
+}
+
+.osf-contact .osf-invalid {
+    outline-color: var(--osf-error);
+    border-color: var(--osf-error);
+}
+
+/* Success dialog + post-submit panel: match the form panel. */
+.osf-contact .osf-dialog,
+.osf-contact .osf-submitted {
+    font-family: var(--font-sans);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+}
+
+.osf-contact .osf-submitted {
+    background: var(--entry);
+    box-shadow: none;
+}
+
+.osf-contact .osf-dialog h2,
+.osf-contact .osf-submitted h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.osf-contact .osf-dialog p,
+.osf-contact .osf-submitted p {
+    color: var(--content);
+}
+
+/* The embed's own buttons (dialog "OK", panel "Send another"): give them the
+   site button shape; colours already come from the --osf-* tokens above. */
+.osf-contact .osf-btn {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    border: 1px solid var(--accent);
+}
+
+.osf-contact .osf-btn:hover,
+.osf-contact .osf-btn:focus-visible {
+    filter: brightness(0.92);
+}

@@ -1,0 +1,34 @@
+{{- /* Contact form — OpenSendForm hosted endpoint.
+
+       No params. The form posts natively to `action` with no JS at all; the
+       deferred embed script (one external dependency, version-pinned in the
+       src) upgrades it in place to a fetch submit with inline validation, a
+       "Message sent" dialog and a "Send another" panel. It wraps the <form>
+       in its own `.osf-root` div and injects `.osf-*` UI at runtime — that
+       injected chrome is themed from the --osf-* custom properties set on
+       `.osf-contact` in assets/css/extended/forms.css, so it follows the site
+       palette in both light and dark.
+
+       `_osf_hp` is the honeypot field: keep it hidden, unlabelled and last.
+       Markup mirrors the vendor snippet exactly (same fields, names, nesting);
+       the only additions are class hooks and a <span> around each label text
+       so the field can stack. */ -}}
+<div class="osf-contact">
+  <form class="osf-form"
+        action="https://app.opensendform.com/v1/form/osf_2dfef2e351c08aea40784c9864702fb2/submit"
+        method="post"
+        data-osf-key="osf_2dfef2e351c08aea40784c9864702fb2"
+        data-osf-url="https://app.opensendform.com">
+    <label class="osf-field">
+      <span class="osf-field-label">Your email</span>
+      <input type="email" name="email" autocomplete="email" required>
+    </label>
+    <label class="osf-field">
+      <span class="osf-field-label">Message</span>
+      <textarea name="message" rows="7" required></textarea>
+    </label>
+    <input type="text" name="_osf_hp" style="display:none" aria-hidden="true" tabindex="-1" autocomplete="off">
+    <button class="btn osf-submit" type="submit">Send</button>
+  </form>
+</div>
+<script src="https://app.opensendform.com/embed/osf.js?v=0.1.0" defer></script>
